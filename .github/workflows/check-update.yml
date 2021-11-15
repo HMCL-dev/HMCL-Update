@@ -2,7 +2,7 @@ name: Check Update
 
 on:
   workflow_dispatch:
-  #schedule:
+#  schedule:
 #    - cron: '0 * * * *'
 
 jobs:
@@ -23,11 +23,14 @@ jobs:
           path: 'files'
         continue-on-error: true
       - name: Create the 'files' folder
-        if: ${{ failure() }}
         run: |
-          mkdir files
-          cd files
-          git init
+          if [ ! -d files ]; then
+            mkdir files
+            cd files
+            if [ ! -d .git ]; then
+              git init
+            fi
+          fi
       - name: Install tools
         run: sudo apt-get install -y jq
       - name: Fetch build information
@@ -108,7 +111,8 @@ jobs:
           cd files
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git commit -m "Commit $HMCL_VERSION" -a
+          git add -A
+          git commit -m "HMCL v$HMCL_VERSION"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
