@@ -1,0 +1,117 @@
+name: Check Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  foo:
+    runs-on: ubuntu-latest
+    env:
+      DEV_VERSION_FILE: 'dev_version.txt'
+    steps:
+      - name: Checkout the 'main' branch
+        uses: actions/checkout@v2
+        with:
+          path: 'main'
+      - name: Checkout the 'files' branch
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+          ref:  'files'
+          path: 'files'
+        continue-on-error: true
+      - name: Create the 'files' folder
+        if: ${{ failure() }}
+        run: |
+          mkdir files
+          cd files
+          git init
+      - name: Install tools
+        run: sudo apt-get install -y jq
+      - name: Fetch build information
+        run: wget -O lastSuccessfulBuild.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json
+      - name: Parse base version
+        run: |
+          export HMCL_EXE_FILE_NAME=`cat lastSuccessfulBuild.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
+          if [ -z `echo $HMCL_EXE_FILE_NAME | grep "^HMCL-[0-9]\.[0-9]\.[0-9]\{3\}\.exe\$"` ]; then exit 1; fi
+          
+          export HMCL_BASE_VERSION=${HMCL_EXE_FILE_NAME:5:3}
+          export HMCL_BUILD_NUMBER=`cat lastSuccessfulBuild.json | jq -M -r '.id'`
+          export HMCL_VERSION="$HMCL_BASE_VERSION.$HMCL_BUILD_NUMBER"
+          
+          if [ "${#HMCL_BUILD_NUMBER}" != 3 ]; then exit 1; fi
+          
+          echo "HMCL_BASE_VERSION=$HMCL_BASE_VERSION" >> $GITHUB_ENV
+          echo "HMCL_BUILD_NUMBER=$HMCL_BUILD_NUMBER" >> $GITHUB_ENV
+          echo "HMCL_VERSION=$HMCL_VERSION" >> $GITHUB_ENV
+      - name: Check for existing version
+        run: |
+          NEED_UPDATE=true
+          if [ -f "files/$DEV_VERSION_FILE" ]; then
+            if [ `cat $DEV_VERSION_FILE` == "$HMCL_VERSION" ]; then 
+               NEED_UPDATE=false
+            fi
+          fi
+          echo "need_update=$NEED_UPDATE" >> $GITHUB_ENV
+      - name: Download artifacts
+        if: ${{ env.need_update == 'true' }}
+        env:
+          DOWNLOAD_BASE: https://ci.huangyuhui.net/job/HMCL/${{ env.HMCL_BUILD_NUMBER }}/artifact/HMCL/build/libs/HMCL-${{ env.HMCL_VERSION }}
+        run: |
+          EXTENSIONS=('.exe' '.exe.sha1' '.jar' '.jar.sha1' '.pack' '.pack.sha1' '.pack.gz' '.pack.gz.sha1' '.pack.xz' '.pack.xz.sha1')
+          
+          cd files
+          echo "$HMCL_VERSION" > $DEV_VERSION_FILE
+          if [ ! -d "files" ]; then
+            mkdir files
+          fi
+          cd files 
+          
+          if [ ! -d "$HMCL_BUILD_NUMBER" ]; then
+            mkdir "$HMCL_BUILD_NUMBER"
+          else 
+            echo "files/$HMCL_BUILD_NUMBER already exists" >&2
+            exit 1
+          fi
+          
+          cd "$HMCL_BUILD_NUMBER"
+          
+          for ext in ${EXTENSIONS[@]}; do
+            wget "$DOWNLOAD_BASE$ext"
+          done
+      - name: Generate JSON
+        if: ${{ env.need_update == 'true' }}
+        env:
+          CDN_BASE: https://cdn.jsdelivr.net/gh/Glavo/HMCL-Update@files/files/${{ env.HMCL_BUILD_NUMBER }}/HMCL-${{ env.HMCL_VERSION }}
+        run: |
+          cd files
+          
+          _packsha1=`cat files/$HMCL_BUILD_NUMBER/HMCL-$HMCL_VERSION.pack.gz.sha1`
+          _packxzsha1=`cat files/$HMCL_BUILD_NUMBER/HMCL-$HMCL_VERSION.pack.xz.sha1`
+          _jarsha1=`cat files/$HMCL_BUILD_NUMBER/HMCL-$HMCL_VERSION.jar.sha1`
+          
+          echo -n "{"                                                > dev_update.json
+          echo -n "\"pack\":\"$CDN_BASE.pack.gz\","                 >> dev_update.json
+          echo -n "\"packsha1\":\"$_packsha1\","                    >> dev_update.json
+          echo -n "\"packxz\":\"$CDN_BASE.pack.xz\","               >> dev_update.json
+          echo -n "\"packxzsha1\":\"$_packxzsha1\","                >> dev_update.json
+          echo -n "\"jar\":\"$CDN_BASE.jar\","                      >> dev_update.json
+          echo -n "\"jarsha1\":\"$_jarsha1\","                      >> dev_update.json
+          echo -n "\"version\":\"$HMCL_VERSION\","                  >> dev_update.json
+          echo -n "\"universal\":\"http://www.mcbbs.net/forum.php?mod=viewthread\u0026tid=142335\"" >> dev_update.json
+          echo -n "}"  >> dev_update.json
+      - name: Commit
+        if: ${{ env.need_update == 'true' }}
+        run: |
+          cd files
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Commit $HMCL_VERSION" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          directory: 'files'
+          branch: 'files'
