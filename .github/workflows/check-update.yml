@@ -2,11 +2,11 @@ name: Check Update
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 * * * *'
+  #schedule:
+#    - cron: '0 * * * *'
 
 jobs:
-  foo:
+  check-update-dev:
     runs-on: ubuntu-latest
     env:
       DEV_VERSION_FILE: 'dev_version.txt'
