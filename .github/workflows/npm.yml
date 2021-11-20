@@ -1,0 +1,77 @@
+name: Publish to NPM
+
+on:
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 * * * *'
+
+jobs:
+  check-update-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Install tools
+        run: sudo apt-get install -y jq npm
+      - name: Fetch build information
+        run: wget -O lastSuccessfulBuild.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json
+      - name: Parse base version
+        run: |
+          export HMCL_EXE_FILE_NAME=`cat lastSuccessfulBuild.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
+          if [ -z `echo $HMCL_EXE_FILE_NAME | grep "^HMCL-[0-9]\.[0-9]\.[0-9]\{3\}\.exe\$"` ]; then exit 1; fi
+          
+          export HMCL_BASE_VERSION=${HMCL_EXE_FILE_NAME:5:3}
+          export HMCL_BUILD_NUMBER=`cat lastSuccessfulBuild.json | jq -M -r '.id'`
+          export HMCL_VERSION="$HMCL_BASE_VERSION.$HMCL_BUILD_NUMBER"
+          
+          if [ "${#HMCL_BUILD_NUMBER}" != 3 ]; then exit 1; fi
+          
+          echo "HMCL_BASE_VERSION=$HMCL_BASE_VERSION" >> $GITHUB_ENV
+          echo "HMCL_BUILD_NUMBER=$HMCL_BUILD_NUMBER" >> $GITHUB_ENV
+          echo "HMCL_VERSION=$HMCL_VERSION" >> $GITHUB_ENV
+      - name: Check for existing version
+        run: |
+          NEED_UPDATE=true
+          HMCL_CURRENT_VERSION=`cat package.json | jq -M -r '.version'`
+          
+          if [ "$HMCL_CURRENT_VERSION" == "$HMCL_VERSION" ]; then 
+            NEED_UPDATE=false
+          fi
+          echo "need_update=$NEED_UPDATE" >> $GITHUB_ENV
+      - name: Download artifacts
+        if: ${{ env.need_update == 'true' }}
+        env:
+          DOWNLOAD_BASE: https://ci.huangyuhui.net/job/HMCL/${{ env.HMCL_BUILD_NUMBER }}/artifact/HMCL/build/libs
+        run: |
+          EXTENSIONS=('exe' 'jar' 'pack' 'pack.gz' 'pack.xz')
+          
+          for ext in ${EXTENSIONS[@]}; do
+            FILE_NAME="HMCL-$HMCL_VERSION.$ext"
+            wget "$DOWNLOAD_BASE/$FILE_NAME"
+            wget "$DOWNLOAD_BASE/$FILE_NAME.sha1"
+            
+            echo "$(cat "$FILE_NAME.sha1") $FILE_NAME" | sha1sum -c -
+          done
+      - name: Generate README
+        if: ${{ env.need_update == 'true' }}
+        run: sed "s/@@dev_version@@/$HMCL_VERSION/g" README.md.template > README.md
+      - name: Update package.json
+        run: cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_VERSION\"") > package.json
+      - name: NPM publish
+        if: ${{ env.need_update == 'true' }}
+        run: npm publish --access public .
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Commit changes
+        if: ${{ env.need_update == 'true' }}
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "[BOT] HMCL v$HMCL_VERSION"
+      - name: Publish changes
+        if: ${{ env.need_update == 'true' }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
