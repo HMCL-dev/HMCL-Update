@@ -53,6 +53,8 @@ jobs:
             
             echo "$(cat "$FILE_NAME.sha1") $FILE_NAME" | sha1sum -c -
           done
+          cp "HMCL-$HMCL_VERSION.jar" "HMCL-$HMCL_VERSION.zip" 
+          cp "HMCL-$HMCL_VERSION.jar.sha1" "HMCL-$HMCL_VERSION.zip.sha1"
       - name: Generate README
         if: ${{ env.need_update == 'true' }}
         run: sed "s/@@dev_version@@/$HMCL_VERSION/g" README.md.template > README.md
