@@ -13,7 +13,7 @@
 
 **注意，淘宝镜像在国内速度更快，但更新比官方慢，如果无法下载请稍等，镜像源需要一段时间来同步。**
 
-更新文件链接（注意，因为 jsDelivr 禁止下载 jar 文件，这里使用 zip 代替 jar）：
+更新文件链接（因为 jsDelivr 禁止下载扩展名为 jar 的文件，这里使用 zip 扩展名作为替代）：
 
 * `.jar`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.209/HMCL-3.4.209.zip
 * `.jar.sha1`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.209/HMCL-3.4.209.zip.sha1
