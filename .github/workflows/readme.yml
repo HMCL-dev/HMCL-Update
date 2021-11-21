@@ -1,0 +1,29 @@
+name: Generate README
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md.template'
+
+jobs:
+  generate-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      - name: Generate README
+        run: ./generate-readme.sh
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "[BOT] Update README.md"
+      - name: Publish changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}

@@ -55,12 +55,12 @@ jobs:
           done
           cp "HMCL-$HMCL_VERSION.jar" "HMCL-$HMCL_VERSION.zip" 
           cp "HMCL-$HMCL_VERSION.jar.sha1" "HMCL-$HMCL_VERSION.zip.sha1"
-      - name: Generate README
-        if: ${{ env.need_update == 'true' }}
-        run: sed "s/@@dev_version@@/$HMCL_VERSION/g" README.md.template > README.md
       - name: Update package.json
         if: ${{ env.need_update == 'true' }}
         run: cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_VERSION\"") > package.json
+      - name: Generate README
+        if: ${{ env.need_update == 'true' }}
+        run: ./generate-readme.sh
       - name: Install NPM
         if: ${{ env.need_update == 'true' }}
         run: sudo apt-get install -y npm
