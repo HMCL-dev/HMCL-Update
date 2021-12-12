@@ -3,7 +3,7 @@ name: Check for updates
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0,3,6,8,10,12,14,16,18,20,22 * * *'
+    - cron: '45 * * * *'
 
 jobs:
   check-update-dev:
