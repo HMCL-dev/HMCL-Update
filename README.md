@@ -16,6 +16,6 @@
 更新文件链接（因为 jsDelivr 禁止下载扩展名为 jar 的文件，这里使用 zip 扩展名作为替代）：
 
 * `.jar`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.zip
-* `.jar.sha1`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.zip.sha1
+* `.pack`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack
+* `.pack.gz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack.gz
 * `.pack.xz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack.xz
-* `.pack.xz.sha1`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack.xz.sha1
