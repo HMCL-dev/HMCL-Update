@@ -19,3 +19,5 @@
 * `.pack`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack
 * `.pack.gz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack.gz
 * `.pack.xz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.4.212/HMCL-3.4.212.pack.xz
+
+文件 SHA1 校验码可前往 [HMCL CI](https://ci.huangyuhui.net/job/HMCL/) 自行查询校验。
