@@ -34,14 +34,15 @@ public class ReadMeTemplate {
                 [![](https://data.jsdelivr.com/v1/package/npm/hmcl-update/badge)](https://www.jsdelivr.com/package/npm/hmcl-update)
                 
                 最新稳定版：[v@@HMCL_STABLE_VERSION@@](https://www.npmjs.com/package/hmcl-update-stable/v/@@HMCL_STABLE_NPM_VERSION@@)
+                
                 最新测试版：[v@@HMCL_DEV_VERSION@@](https://www.npmjs.com/package/hmcl-update/v/@@HMCL_DEV_NPM_VERSION@@)
                 
                 用于将 [Hello Minecraft! Launcher](https://github.com/huanghongxun/HMCL) 推送至 NPM 仓库中，并获取 CDN 下载链接。
                                 
                 下载 HMCL 最新稳定版（tgz 格式，包括 exe 和 jar）：
                 
-                * [NPM 官方源](https://www.npmjs.com/)：[hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-@@HMCL_STABLE_NPM_VERSION@@.tgz)
-                * [淘宝 NPM 镜像](https://npmmirror.com/)：[hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-@@HMCL_STABLE_NPM_VERSION@@.tgz)
+                * [NPM 官方源](https://www.npmjs.com/)：[hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz)
+                * [淘宝 NPM 镜像](https://npmmirror.com/)：[hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-stable-@@HMCL_STABLE_NPM_VERSION@@.tgz)
                 
                 下载 HMCL 最新测试版（tgz 格式，包括 exe 和 jar）：
                 
