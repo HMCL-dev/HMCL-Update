@@ -43,8 +43,8 @@ public final class ParseVersion {
         String npmVersion = "%s.%s.%s".formatted(majorVersion, minorVersion, patchVersion);
 
         if (buildNumber != null) {
-            addEnv("HMCL_BUILD_NUMBER", buildNumber);
             npmVersion = npmVersion + "-" + buildNumber;
+            addEnv("HMCL_BUILD_NUMBER", buildNumber);
         }
 
         addEnv("HMCL_NPM_VERSION", npmVersion);

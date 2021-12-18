@@ -38,7 +38,7 @@ jobs:
           NEED_UPDATE=true
           HMCL_CURRENT_VERSION=`cat "./channels/$HMCL_UPDATE_CHANNEL/package.json" | jq -M -r '.version'`
           
-          if [ "$HMCL_CURRENT_VERSION" == "$HMCL_VERSION" ]; then 
+          if [ "$HMCL_CURRENT_VERSION" == "$HMCL_NPM_VERSION" ]; then 
             NEED_UPDATE=false
           fi
           echo "need_update=$NEED_UPDATE" >> $GITHUB_ENV
