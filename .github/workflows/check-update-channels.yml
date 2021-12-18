@@ -6,12 +6,12 @@ on:
     - cron: '45 * * * *'
 
 jobs:
-  check-update-dev:
-    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
-    with:
-      channel: 'dev'
   check-update-stable:
     uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
-    needs: check-update-dev
     with:
       channel: 'stable'
+  check-update-dev:
+    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
+    needs: check-update-stable
+    with:
+      channel: 'dev'
