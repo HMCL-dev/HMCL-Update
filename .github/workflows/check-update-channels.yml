@@ -7,11 +7,11 @@ on:
 
 jobs:
   check-update-dev:
-    uses: ./.github/workflows/check-update.yml@main
+    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
     with:
       channel: 'dev'
   check-update-stable:
-    uses: ./.github/workflows/check-update.yml@main
+    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
     needs: check-update-dev
     with:
       channel: 'stable'
