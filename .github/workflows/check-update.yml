@@ -1,39 +1,42 @@
-name: Check for updates
+name: Check Update Template
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '45 * * * *'
+  workflow_call:
+    inputs:
+      channel:
+        required: true
+        type: string
 
 jobs:
-  check-update-dev:
+  check-update:
     runs-on: ubuntu-latest
+    env:
+      HMCL_UPDATE_CHANNEL: ${{ inputs.channel }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: '0'
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: Install jq
         run: sudo apt-get install -y jq
       - name: Fetch build information
-        run: wget -O lastSuccessfulBuild.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json
-      - name: Parse base version
+        run: |
+          if [ "$HMCL_UPDATE_CHANNEL" == "dev" ]; then
+            wget -O lastSuccessfulBuild.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json
+          else 
+            wget -O lastSuccessfulBuild.json https://ci.huangyuhui.net/job/HMCL-stable/lastSuccessfulBuild/api/json
+          fi
+      - name: Parse version
         run: |
           export HMCL_EXE_FILE_NAME=`cat lastSuccessfulBuild.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
-          if [ -z `echo $HMCL_EXE_FILE_NAME | grep "^HMCL-[0-9]\.[0-9]\.[0-9]\{3\}\.exe\$"` ]; then exit 1; fi
-          
-          export HMCL_BASE_VERSION=${HMCL_EXE_FILE_NAME:5:3}
-          export HMCL_BUILD_NUMBER=`cat lastSuccessfulBuild.json | jq -M -r '.id'`
-          export HMCL_VERSION="$HMCL_BASE_VERSION.$HMCL_BUILD_NUMBER"
-          
-          if [ "${#HMCL_BUILD_NUMBER}" != 3 ]; then exit 1; fi
-          
-          echo "HMCL_BASE_VERSION=$HMCL_BASE_VERSION" >> $GITHUB_ENV
-          echo "HMCL_BUILD_NUMBER=$HMCL_BUILD_NUMBER" >> $GITHUB_ENV
-          echo "HMCL_VERSION=$HMCL_VERSION" >> $GITHUB_ENV
+          java ./scripts/ParseVersion.java "$HMCL_UPDATE_CHANNEL" "$HMCL_EXE_FILE_NAME"
       - name: Check for existing version
         run: |
           NEED_UPDATE=true
-          HMCL_CURRENT_VERSION=`cat package.json | jq -M -r '.version'`
+          HMCL_CURRENT_VERSION=`cat "./channels/$HMCL_UPDATE_CHANNEL/package.json" | jq -M -r '.version'`
           
           if [ "$HMCL_CURRENT_VERSION" == "$HMCL_VERSION" ]; then 
             NEED_UPDATE=false
@@ -41,34 +44,37 @@ jobs:
           echo "need_update=$NEED_UPDATE" >> $GITHUB_ENV
       - name: Download artifacts
         if: ${{ env.need_update == 'true' }}
-        env:
-          DOWNLOAD_BASE: https://ci.huangyuhui.net/job/HMCL/${{ env.HMCL_BUILD_NUMBER }}/artifact/HMCL/build/libs
         run: |
-          EXTENSIONS=('exe' 'jar' 'pack' 'pack.gz' 'pack.xz')
+          cd "./channels/$HMCL_UPDATE_CHANNEL/"
           
+          EXTENSIONS=('exe' 'jar' 'pack' 'pack.gz' 'pack.xz')
           for ext in ${EXTENSIONS[@]}; do
             FILE_NAME="HMCL-$HMCL_VERSION.$ext"
-            wget "$DOWNLOAD_BASE/$FILE_NAME"
-            wget "$DOWNLOAD_BASE/$FILE_NAME.sha1"
-            
+            wget "$HMCL_DOWNLOAD_BASE/$FILE_NAME"
+            wget "$HMCL_DOWNLOAD_BASE/$FILE_NAME.sha1"
+          
             echo "$(cat "$FILE_NAME.sha1") $FILE_NAME" | sha1sum -c -
           done
           cp "HMCL-$HMCL_VERSION.jar" "HMCL-$HMCL_VERSION.zip" 
           cp "HMCL-$HMCL_VERSION.jar.sha1" "HMCL-$HMCL_VERSION.zip.sha1"
       - name: Update package.json
         if: ${{ env.need_update == 'true' }}
-        run: cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_VERSION\"") > package.json
-      - name: Generate README
-        if: ${{ env.need_update == 'true' }}
-        run: ./generate-readme.sh
+        run: |
+          cd "./channels/$HMCL_UPDATE_CHANNEL/"
+          cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_VERSION\"") > package.json
       - name: Install NPM
         if: ${{ env.need_update == 'true' }}
         run: sudo apt-get install -y npm
       - name: NPM publish
         if: ${{ env.need_update == 'true' }}
-        run: npm publish --access public .
+        run: |
+          cd "./channels/$HMCL_UPDATE_CHANNEL/"
+          npm publish --access public .
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Generate README
+        if: ${{ env.need_update == 'true' }}
+        run: ./scripts/generate-readme.sh
       - name: Commit changes
         if: ${{ env.need_update == 'true' }}
         run: |

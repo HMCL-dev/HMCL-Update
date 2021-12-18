@@ -1,0 +1,17 @@
+name: Check Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 * * * *'
+
+jobs:
+  check-update-dev:
+    uses: ./.github/workflows/check-update.yml@main
+    with:
+      channel: 'dev'
+  check-update-stable:
+    uses: ./.github/workflows/check-update.yml@main
+    needs: check-update-dev
+    with:
+      channel: 'stable'

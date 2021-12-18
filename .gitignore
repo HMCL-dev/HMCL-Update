@@ -1,7 +1,10 @@
 .idea/
 build/
 /HMCL-*
-/lastSuccessfulBuild.json
+/channels/dev/HMCL-*
+/channels/stable/HMCL-*
+lastSuccessfulBuild.json
+
 
 # Logs
 logs

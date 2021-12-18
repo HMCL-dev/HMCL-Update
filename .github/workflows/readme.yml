@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths:
-      - 'README.md.template'
+      - 'scripts/ReadMeTemplate.java'
 
 jobs:
   generate-readme:
@@ -16,7 +16,7 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
       - name: Generate README
-        run: ./generate-readme.sh
+        run: ./scripts/generate-readme.sh
       - name: Commit changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

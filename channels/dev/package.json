@@ -1,0 +1,14 @@
+{
+  "name": "hmcl-update",
+  "description": "",
+  "version": "",
+  "author": "Glavo <zjx001202@gmail.com> (https://glavo.site)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Glavo/HMCL-Update.git"
+  },
+  "files": [
+    "/HMCL-*",
+    "/README.md"
+  ]
+}
