@@ -8,8 +8,7 @@ on:
         type: string
     secrets:
       npmToken:
-
-
+        required: true
 
 jobs:
   check-update:
