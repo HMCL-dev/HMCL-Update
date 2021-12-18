@@ -35,18 +35,16 @@ public final class ParseVersion {
         String patchVersion = matcher.group("patch");
         String buildNumber = matcher.group("build");
 
-        if ((buildNumber == null) == isDev) {
-            System.err.printf("Bad file name: %s%n", fileName);
-            System.exit(-1);
-        }
-
         addEnv("HMCL_VERSION", version);
         addEnv("HMCL_MAJOR_VERSION", majorVersion);
         addEnv("HMCL_MINOR_VERSION", minorVersion);
         addEnv("HMCL_PATCH_VERSION", patchVersion);
 
-        if (isDev) {
+        if (buildNumber != null) {
             addEnv("HMCL_BUILD_NUMBER", buildNumber);
+        }
+
+        if (isDev) {
             addEnv("HMCL_DOWNLOAD_BASE", "https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/artifact/HMCL/build/libs");
         } else {
             addEnv("HMCL_DOWNLOAD_BASE", "https://ci.huangyuhui.net/job/HMCL-stable/lastSuccessfulBuild/artifact/HMCL/build/libs");
