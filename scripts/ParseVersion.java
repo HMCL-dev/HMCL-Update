@@ -40,9 +40,14 @@ public final class ParseVersion {
         addEnv("HMCL_MINOR_VERSION", minorVersion);
         addEnv("HMCL_PATCH_VERSION", patchVersion);
 
+        String npmVersion = "%s.%s.%s".formatted(majorVersion, minorVersion, patchVersion);
+
         if (buildNumber != null) {
             addEnv("HMCL_BUILD_NUMBER", buildNumber);
+            npmVersion = npmVersion + "-" + buildNumber;
         }
+
+        addEnv("HMCL_NPM_VERSION", npmVersion);
 
         if (isDev) {
             addEnv("HMCL_DOWNLOAD_BASE", "https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/artifact/HMCL/build/libs");

@@ -61,7 +61,7 @@ jobs:
         if: ${{ env.need_update == 'true' }}
         run: |
           cd "./channels/$HMCL_UPDATE_CHANNEL/"
-          cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_VERSION\"") > package.json
+          cat <<< $(cat package.json | jq -M -r ".version=\"$HMCL_NPM_VERSION\"") > package.json
       - name: Install NPM
         if: ${{ env.need_update == 'true' }}
         run: sudo apt-get install -y npm
