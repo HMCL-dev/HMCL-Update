@@ -15,9 +15,8 @@ public class ReadMeTemplate {
         if (!devVersion.isEmpty() && !VERSION_PATTERN.matcher(devVersion).matches()) {
             System.err.println("Bad devVersion " + devVersion);
         }
-
         if (!stableVersion.isEmpty() && !VERSION_PATTERN.matcher(stableVersion).matches()) {
-            System.err.println("Bad devVersion " + stableVersion);
+            System.err.println("Bad stableVersion " + stableVersion);
         }
 
         Map<String, String> vars = Map.of(
