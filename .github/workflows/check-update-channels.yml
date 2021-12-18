@@ -10,8 +10,10 @@ jobs:
     uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
     with:
       channel: 'stable'
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   check-update-dev:
     uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
     needs: check-update-stable
     with:
       channel: 'dev'
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

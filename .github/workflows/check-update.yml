@@ -6,6 +6,10 @@ on:
       channel:
         required: true
         type: string
+    secrets:
+      NPM_TOKEN:
+        required: true
+
 
 jobs:
   check-update:
