@@ -102,7 +102,7 @@ public class ReadMeTemplate {
 
         versions.forEach((channel, version) -> {
             builder.append(
-                    "[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=%3$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)\n".formatted(
+                    "[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/%1$s?label=%3$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)\n".formatted(
                             channel.artifactId(), version, channel.chineseName
                     ));
         });
@@ -133,8 +133,11 @@ public class ReadMeTemplate {
                     * `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.gz
                     * `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.xz
                                         
-                    您可以通过在启动 HMCL 时添加 JVM 参数 `-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json` 
-                    覆盖默认更新源，强制通过上方的 CDN 链接更新。
+                    您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
+                    
+                    ```
+                    `-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json`
+                    ```
                                         
                     """.formatted(channel.artifactId(), version, channel.chineseName));
         });
