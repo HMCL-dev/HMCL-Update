@@ -31,7 +31,7 @@
 您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
 
 ```
-`-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json`
+-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
 ```
 
 测试版更新文件链接：
@@ -45,7 +45,7 @@
 您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
 
 ```
-`-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json`
+-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json
 ```
 
 文件 SHA1 校验码可前往 [HMCL CI](https://ci.huangyuhui.net/) 自行查询校验。
