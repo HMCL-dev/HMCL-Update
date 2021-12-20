@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-update-dev:
-    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
+    uses: Glavo/HMCL-Update/.github/workflows/check.yml@main
     with:
       channel: 'dev'
     secrets:
