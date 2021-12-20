@@ -1,9 +1,11 @@
 .idea/
+.gradle/
 build/
 /HMCL-*
 /channels/dev/HMCL-*
 /channels/stable/HMCL-*
 lastSuccessfulBuild.json
+/gradle.properties
 
 
 # Logs
