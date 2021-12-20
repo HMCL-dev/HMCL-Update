@@ -136,7 +136,7 @@ public class ReadMeTemplate {
                     您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
                     
                     ```
-                    `-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json`
+                    -Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
                     ```
                                         
                     """.formatted(channel.artifactId(), version, channel.chineseName));
