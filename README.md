@@ -1,38 +1,45 @@
 # Hello Minecraft! Launcher 更新分发
 
-[![](https://data.jsdelivr.com/v1/package/npm/hmcl-update-stable/badge)](https://www.jsdelivr.com/package/npm/hmcl-update-stable)
-[![](https://data.jsdelivr.com/v1/package/npm/hmcl-update/badge)](https://www.jsdelivr.com/package/npm/hmcl-update)
+本仓库用于将 HMCL 推送至 Maven Central 上，并获取阿里云镜像链接。
 
-最新稳定版：[v3.5.2](https://www.npmjs.com/package/hmcl-update-stable/v/3.5.2)
+[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.2/pom)
+[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.0.214/pom)
 
-最新测试版：[v3.5.0.214](https://www.npmjs.com/package/hmcl-update/v/3.5.0-214)
+下载稳定版 v3.5.2:
 
-用于将 [Hello Minecraft! Launcher](https://github.com/huanghongxun/HMCL) 推送至 NPM 仓库中，并获取 CDN 下载链接。
+* `.exe`：[hmcl-stable-3.5.2.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.exe)
+* `.jar`：[hmcl-stable-3.5.2.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar)
 
-下载 HMCL 最新稳定版（tgz 格式，包括 exe 和 jar）：
+下载测试版 v3.5.0.214:
 
-* [NPM 官方源](https://www.npmjs.com/)：[hmcl-update-stable-3.5.2.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-stable-3.5.2.tgz)
-* [淘宝 NPM 镜像](https://npmmirror.com/)：[hmcl-update-stable-3.5.2.tgz](https://registry.npmjs.org/hmcl-update-stable/-/hmcl-update-stable-3.5.2.tgz)
+* `.exe`：[hmcl-dev-3.5.0.214.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.exe)
+* `.jar`：[hmcl-dev-3.5.0.214.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.jar)
 
-下载 HMCL 最新测试版（tgz 格式，包括 exe 和 jar）：
 
-* [NPM 官方源](https://www.npmjs.com/)：[hmcl-update-3.5.0-214.tgz](https://registry.npmjs.org/hmcl-update/-/hmcl-update-3.5.0-214.tgz)
-* [淘宝 NPM 镜像](https://npmmirror.com/)：[hmcl-update-3.5.0-214.tgz](https://registry.npmjs.org/hmcl-update/-/hmcl-update-3.5.0-214.tgz)
+## 更新文件
 
-**注意，淘宝镜像在国内速度更快，但更新比官方慢，如果无法下载请稍等，镜像源需要一段时间来同步。**
+下面的链接用于 HMCL 自动更新功能。
 
-稳定版更新文件链接（因为 jsDelivr 禁止下载扩展名为 jar 的文件，这里使用 zip 扩展名作为替代）：
+稳定版更新文件链接：
 
-* `.jar`: https://cdn.jsdelivr.net/npm/hmcl-update-stable@3.5.2/HMCL-3.5.2.zip
-* `.pack`: https://cdn.jsdelivr.net/npm/hmcl-update-stable@3.5.2/HMCL-3.5.2.pack
-* `.pack.gz`: https://cdn.jsdelivr.net/npm/hmcl-update-stable@3.5.2/HMCL-3.5.2.pack.gz
-* `.pack.xz`: https://cdn.jsdelivr.net/npm/hmcl-update-stable@3.5.2/HMCL-3.5.2.pack.xz
+* `.json`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
+* `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar
+* `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack
+* `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.gz
+* `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.xz
 
-测试版更新文件链接（因为 jsDelivr 禁止下载扩展名为 jar 的文件，这里使用 zip 扩展名作为替代）：
+您可以通过在启动 HMCL 时添加 JVM 参数 `-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json`
+覆盖默认更新源，强制通过上方的 CDN 链接更新。
 
-* `.jar`: https://cdn.jsdelivr.net/npm/hmcl-update@3.5.0-214/HMCL-3.5.0.214.zip
-* `.pack`: https://cdn.jsdelivr.net/npm/hmcl-update@3.5.0-214/HMCL-3.5.0.214.pack
-* `.pack.gz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.5.0-214/HMCL-3.5.0.214.pack.gz
-* `.pack.xz`: https://cdn.jsdelivr.net/npm/hmcl-update@3.5.0-214/HMCL-3.5.0.214.pack.xz
+测试版更新文件链接：
+
+* `.json`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json
+* `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.jar
+* `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack
+* `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack.gz
+* `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack.xz
+
+您可以通过在启动 HMCL 时添加 JVM 参数 `-Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json`
+覆盖默认更新源，强制通过上方的 CDN 链接更新。
 
 文件 SHA1 校验码可前往 [HMCL CI](https://ci.huangyuhui.net/) 自行查询校验。
