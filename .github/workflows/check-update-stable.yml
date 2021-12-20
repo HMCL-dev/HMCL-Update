@@ -1,0 +1,19 @@
+name: Check Update Stable
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 */6 * * *'
+
+jobs:
+  check-update-stable:
+    uses: Glavo/HMCL-Update/.github/workflows/check-update.yml@main
+    with:
+      channel: 'stable'
+    secrets:
+      signingKeyId: ${{ secrets.SIGNING_KEY_ID }}
+      signingPassword: ${{ secrets.SIGNING_PASSWORD }}
+      signingKey: ${{ secrets.SIGNING_KEY }}
+      sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
+      sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
+      sonatypeStagingProfileId: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}

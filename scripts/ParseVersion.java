@@ -7,20 +7,27 @@ import java.util.regex.Pattern;
 
 public final class ParseVersion {
     private static final Pattern PATTERN = Pattern.compile("^HMCL-(?<version>(?<major>[0-9]+)\\.(?<minor>[0-9]+)\\.(?<patch>[0-9]+)(\\.(?<build>[0-9]+))?)\\.(exe|jar)$");
+    private static final Pattern CI_BUILD_NUMBER_PATTERN = Pattern.compile("^[0-9]+$");
 
     public static void main(String[] args) throws Exception {
-        boolean isDev;
-        if ("dev".equals(args[0])) {
-            isDev = true;
-        } else if ("stable".equals(args[0])) {
-            isDev = false;
-        } else {
-            System.err.println("Unknown channel: " + args[0]);
-            System.exit(-1);
-            return;
+        final Channel channel;
+
+        switch (System.getenv("HMCL_UPDATE_CHANNEL")) {
+            case "dev" -> channel = Channel.DEV;
+            case "stable" -> channel = Channel.STABLE;
+            default -> {
+                System.err.println("Unknown channel: " + System.getenv("HMCL_UPDATE_CHANNEL"));
+                System.exit(-1);
+                return;
+            }
         }
 
-        String fileName = args[1];
+        String ciBuildNumber = System.getenv("HMCL_CI_BUILD_NUMBER");
+        if (!CI_BUILD_NUMBER_PATTERN.matcher(ciBuildNumber).matches()) {
+            System.err.printf("Bad ci build number: '%s'%n", ciBuildNumber);
+        }
+
+        String fileName = args[0];
 
         Matcher matcher = PATTERN.matcher(fileName);
         if (!matcher.matches()) {
@@ -36,6 +43,7 @@ public final class ParseVersion {
         String buildNumber = matcher.group("build");
 
         addEnv("HMCL_VERSION", version);
+        /*
         addEnv("HMCL_MAJOR_VERSION", majorVersion);
         addEnv("HMCL_MINOR_VERSION", minorVersion);
         addEnv("HMCL_PATCH_VERSION", patchVersion);
@@ -47,18 +55,27 @@ public final class ParseVersion {
             addEnv("HMCL_BUILD_NUMBER", buildNumber);
         }
 
-        addEnv("HMCL_NPM_VERSION", npmVersion);
+        // addEnv("HMCL_NPM_VERSION", npmVersion);
+         */
 
-        if (isDev) {
-            addEnv("HMCL_DOWNLOAD_BASE", "https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/artifact/HMCL/build/libs");
-        } else {
-            addEnv("HMCL_DOWNLOAD_BASE", "https://ci.huangyuhui.net/job/HMCL-stable/lastSuccessfulBuild/artifact/HMCL/build/libs");
-        }
+        addEnv("HMCL_CI_BUILD_NUMBER", ciBuildNumber);
+        addEnv("HMCL_DOWNLOAD_BASE", "%s/%s/artifact/HMCL/build/libs".formatted(channel.ciUrlBase, ciBuildNumber));
     }
 
     private static final Path GITHUB_ENV_FILE = Paths.get(System.getenv("GITHUB_ENV"));
 
     private static void addEnv(String name, String value) throws Exception {
         Files.writeString(GITHUB_ENV_FILE, "%s=%s\n".formatted(name, value), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+    }
+
+    enum Channel {
+        DEV("https://ci.huangyuhui.net/job/HMCL"),
+        STABLE("https://ci.huangyuhui.net/job/HMCL-stable");
+
+        final String ciUrlBase;
+
+        Channel(String ciUrlBase) {
+            this.ciUrlBase = ciUrlBase;
+        }
     }
 }

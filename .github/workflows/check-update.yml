@@ -1,0 +1,62 @@
+name: Maven Publish
+on:
+  workflow_call:
+    inputs:
+      channel:
+        required: true
+        type: string
+    secrets:
+      signingKeyId:
+        required: true
+      signingPassword:
+        required: true
+      signingKey:
+        required: true
+      sonatypeUsername:
+        required: true
+      sonatypePassword:
+        required: true
+      sonatypeStagingProfileId:
+        required: true
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    env:
+      HMCL_UPDATE_CHANNEL: ${{ inputs.channel }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      - name: Fetch build information
+        run: |
+          case $HMCL_UPDATE_CHANNEL in
+            dev)    wget -O ci.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json;;
+            stable) wget -O ci.json https://ci.huangyuhui.net/job/HMCL-stable/lastSuccessfulBuild/api/json;;
+            *) 
+              echo "Unknown channel: $HMCL_UPDATE_CHANNEL" >&2
+              exit 1
+              ;;
+          esac
+          
+          export HMCL_EXE_FILE_NAME=`cat ci.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
+          export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber'`
+          java ./scripts/ParseVersion.java "$HMCL_EXE_FILE_NAME"
+      - name: Check for existing version
+        run: java ./scripts/CheckExistingVersion.java
+      - name: Publish to Maven Central
+        if: ${{ env.need_update == 'true' }}
+        run: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+        env:
+          SIGNING_KEY_ID: ${{ secrets.signingKeyId }}
+          SIGNING_PASSWORD: ${{ secrets.signingPassword }}
+          SIGNING_KEY: ${{ secrets.signingKey }}
+          SONATYPE_USERNAME: ${{ secrets.sonatypeUsername }}
+          SONATYPE_PASSWORD: ${{ secrets.sonatypePassword }}
+          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.sonatypeStagingProfileId }}
+
+

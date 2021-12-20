@@ -13,11 +13,13 @@ val HMCL_BUILD_NUMBER_PATTERN = Regex("^[0-9]+$")
 val exts = listOf("exe", "jar", "pack", "pack.gz", "pack.xz")
 
 enum class HMCLChannel(
-    val artifactId: String,
+    val id: String,
     val ciUrlBase: String
 ) {
-    DEV("hmcl-dev", "https://ci.huangyuhui.net/job/HMCL"),
-    STABLE("hmcl-stable", "https://ci.huangyuhui.net/job/HMCL-stable");
+    DEV("dev", "https://ci.huangyuhui.net/job/HMCL"),
+    STABLE("stable", "https://ci.huangyuhui.net/job/HMCL-stable");
+
+    val artifactId: String = "hmcl-$id"
 }
 
 val hmclVersion =
@@ -29,14 +31,18 @@ val ciBuildNumber =
         ?: System.getenv("HMCL_CI_BUILD_NUMBER") ?: throw GradleException("HMCL CI build number not specified")
 
 val hmclChannel =
-    when (
-        val c = findProperty("hmcl.channel")?.toString()
-            ?: System.getenv("HMCL_CHANNEL") ?: throw GradleException("HMCL channel not specified")
-    ) {
-        "dev" -> HMCLChannel.DEV
-        "stable" -> HMCLChannel.STABLE
-        else -> throw GradleException("Bad HMCL channel: $c")
-    }
+    (findProperty("hmcl.channel")?.toString()
+            ?: System.getenv("HMCL_UPDATE_CHANNEL") ?: throw GradleException("HMCL channel not specified"))
+        .let {
+            for (value in HMCLChannel.values()) {
+                if (value.id == it) {
+                    return@let value
+                }
+            }
+
+            throw GradleException("Unknown channel name: $it")
+        }
+
 
 if (!HMCL_VERSION_PATTERN.matches(hmclVersion)) {
     throw GradleException("Bad HMCL version: $hmclVersion")
@@ -47,6 +53,7 @@ if (!HMCL_BUILD_NUMBER_PATTERN.matches(ciBuildNumber)) {
 }
 
 val downloadDir = buildDir.resolve("downloads")
+val downloadVerifyDir = downloadDir.resolve("sha1")
 
 val downloadArtifacts = tasks.create<de.undercouch.gradle.tasks.download.Download>("downloadArtifacts") {
     doFirst {
@@ -57,7 +64,6 @@ val downloadArtifacts = tasks.create<de.undercouch.gradle.tasks.download.Downloa
 
     for (ext in exts) {
         src("${hmclChannel.ciUrlBase}/$ciBuildNumber/artifact/HMCL/build/libs/HMCL-$hmclVersion.$ext")
-        src("${hmclChannel.ciUrlBase}/$ciBuildNumber/artifact/HMCL/build/libs/HMCL-$hmclVersion.$ext.sha1")
     }
 
     overwrite(false)
@@ -66,8 +72,25 @@ val downloadArtifacts = tasks.create<de.undercouch.gradle.tasks.download.Downloa
     retries(5)
 }
 
+val downloadVerifyFiles = tasks.create<de.undercouch.gradle.tasks.download.Download>("downloadVerifyFiles") {
+    doFirst {
+        if (!downloadVerifyDir.exists()) {
+            downloadVerifyDir.mkdirs()
+        }
+    }
+
+    for (ext in exts) {
+        src("${hmclChannel.ciUrlBase}/$ciBuildNumber/artifact/HMCL/build/libs/HMCL-$hmclVersion.$ext.sha1")
+    }
+
+    overwrite(false)
+    quiet(false)
+    dest(downloadVerifyDir)
+    retries(5)
+}
+
 val verifyDownload = tasks.create("verifyDownload") {
-    dependsOn(downloadArtifacts)
+    dependsOn(downloadArtifacts, downloadVerifyFiles)
 
     doLast {
         var failed = false
@@ -75,13 +98,13 @@ val verifyDownload = tasks.create("verifyDownload") {
 
         for (ext in exts) {
             val file = downloadDir.resolve("HMCL-$hmclVersion.$ext")
+            val hashFile = downloadVerifyDir.resolve("HMCL-$hmclVersion.$ext.sha1")
+
             if (!file.exists()) {
                 logger.log(LogLevel.ERROR, "$file does not exist")
                 failed = true
                 continue
             }
-
-            val hashFile = downloadDir.resolve("HMCL-$hmclVersion.$ext.sha1")
             if (!hashFile.exists()) {
                 logger.log(LogLevel.ERROR, "$hashFile does not exist")
                 failed = true
@@ -110,9 +133,7 @@ val verifyDownload = tasks.create("verifyDownload") {
     }
 }
 
-
 val updateJsonFile = downloadDir.resolve("HMCL-$hmclVersion.json")
-
 val generateUpdateJson = tasks.create("generateUpdateJson") {
     dependsOn(verifyDownload)
 
@@ -125,7 +146,7 @@ val generateUpdateJson = tasks.create("generateUpdateJson") {
             "https://maven.aliyun.com/repository/central/org/glavo/hmcl/${hmclChannel.artifactId}/$hmclVersion/${hmclChannel.artifactId}-$hmclVersion.$ext"
 
         fun sha1(ext: String) =
-            downloadDir.resolve("HMCL-$hmclVersion.$ext.sha1").readText().trim()
+            downloadVerifyDir.resolve("HMCL-$hmclVersion.$ext.sha1").readText().trim()
 
         val data = mapOf(
             "pack" to downloadLink("pack"),
@@ -159,21 +180,11 @@ configure<PublishingExtension> {
             artifactId = hmclChannel.artifactId
             version = hmclVersion
 
-            for (ext in exts) {
+            for (ext in exts.plus("json")) {
                 artifact(downloadDir.resolve("HMCL-$hmclVersion.$ext")) {
                     extension = ext
                     classifier = ""
                 }
-
-                artifact(downloadDir.resolve("HMCL-$hmclVersion.$ext.sha1")) {
-                    extension = "$ext.sha1"
-                    classifier = ""
-                }
-            }
-
-            artifact(downloadDir.resolve("HMCL-$hmclVersion.json")) {
-                extension = "json"
-                classifier = ""
             }
 
             pom {
@@ -222,8 +233,8 @@ if (secretPropsFile.exists()) {
 }
 
 listOf(
-    "sonatypeUsername" to "OSSRH_USERNAME",
-    "sonatypePassword" to "OSSRH_PASSWORD",
+    "sonatypeUsername" to "SONATYPE_USERNAME",
+    "sonatypePassword" to "SONATYPE_PASSWORD",
     "sonatypeStagingProfileId" to "SONATYPE_STAGING_PROFILE_ID",
     "signing.keyId" to "SIGNING_KEY_ID",
     "signing.password" to "SIGNING_PASSWORD",
