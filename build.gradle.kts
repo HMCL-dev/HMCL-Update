@@ -12,15 +12,26 @@ val HMCL_BUILD_NUMBER_PATTERN = Regex("^[0-9]+$")
 
 val exts = listOf("exe", "jar", "pack", "pack.gz", "pack.xz")
 
-enum class HMCLChannel(
-    val id: String,
+data class HMCLChannel(
+    val name: String,
     val ciUrlBase: String
 ) {
-    DEV("dev", "https://ci.huangyuhui.net/job/HMCL"),
-    STABLE("stable", "https://ci.huangyuhui.net/job/HMCL-stable");
+    val artifactId: String = "hmcl-$name"
 
-    val artifactId: String = "hmcl-$id"
 }
+
+val channels: List<HMCLChannel> = run {
+    val p = java.util.Properties()
+    rootProject.file("channels.properties").bufferedReader().use { p.load(it) }
+
+    p.getProperty("names")!!.split(',').map { name ->
+        val urlBase = p.getProperty("$name.ci.url") ?: "https://ci.huangyuhui.net/job/HMCL-$name"
+
+        HMCLChannel(name, urlBase)
+    }
+}
+
+logger.quiet(channels.toString())
 
 val hmclVersion =
     findProperty("hmcl.version")?.toString()
@@ -32,10 +43,10 @@ val ciBuildNumber =
 
 val hmclChannel =
     (findProperty("hmcl.channel")?.toString()
-            ?: System.getenv("HMCL_UPDATE_CHANNEL") ?: throw GradleException("HMCL channel not specified"))
+        ?: System.getenv("HMCL_UPDATE_CHANNEL") ?: throw GradleException("HMCL channel not specified"))
         .let {
-            for (value in HMCLChannel.values()) {
-                if (value.id == it) {
+            for (value in channels) {
+                if (value.name == it) {
                     return@let value
                 }
             }
