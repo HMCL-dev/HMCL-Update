@@ -20,7 +20,9 @@
 [HMCL CI](https://ci.huangyuhui.net/) 提供文件 SHA-1 校验码，请自行校验文件完整性。
 ## 更新文件
 
-下面的链接用于 HMCL 自动更新功能。
+下面的链接用于 HMCL 自动更新功能。我们通常会在发布后将它们及时推送给用户，但您也可以手动指定它们作为更新源强制更新。
+
+### 稳定版
 
 稳定版更新文件链接：
 
@@ -34,6 +36,8 @@
 ```
 -Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
 ```
+
+### 测试版
 
 测试版更新文件链接：
 
