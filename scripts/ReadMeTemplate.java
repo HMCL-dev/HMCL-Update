@@ -127,22 +127,24 @@ public class ReadMeTemplate {
             builder.append("""
                     %3$s更新文件链接：
                                         
-                    * `.json`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
                     * `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar
                     * `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack
                     * `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.gz
                     * `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.xz
                                         
+                    如需校验文件，请前往 [%4$s \\[Jenkins\\]](%5$s) 获取文件 SHA-1 校验码。
+                                        
                     您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
-                    
+                                        
                     ```
                     -Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
                     ```
                                         
-                    """.formatted(channel.artifactId(), version, channel.chineseName));
+                    """.formatted(
+                    channel.artifactId(), version, channel.chineseName,
+                    last(channel.ciUrlBase.split("/")), channel.ciUrlBase
+            ));
         });
-
-        builder.append("文件 SHA1 校验码可前往 [HMCL CI](https://ci.huangyuhui.net/) 自行查询校验。\n");
 
         String res = builder.toString();
 
@@ -165,5 +167,9 @@ public class ReadMeTemplate {
         }
 
         Files.writeString(Paths.get(envFile), "%s=%s\n".formatted(name, value), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+    }
+
+    private static String last(String[] args) {
+        return args[args.length - 1];
     }
 }
