@@ -22,11 +22,12 @@
 
 稳定版更新文件链接：
 
-* `.json`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
 * `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar
 * `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack
 * `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.gz
 * `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.xz
+
+如需校验文件，请前往 [HMCL-stable \[Jenkins\]](https://ci.huangyuhui.net/job/HMCL-stable) 获取文件 SHA-1 校验码。
 
 您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
 
@@ -36,11 +37,12 @@
 
 测试版更新文件链接：
 
-* `.json`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json
 * `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.jar
 * `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack
 * `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack.gz
 * `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.pack.xz
+
+如需校验文件，请前往 [HMCL \[Jenkins\]](https://ci.huangyuhui.net/job/HMCL) 获取文件 SHA-1 校验码。
 
 您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
 
@@ -48,4 +50,3 @@
 -Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.0.214/hmcl-dev-3.5.0.214.json
 ```
 
-文件 SHA1 校验码可前往 [HMCL CI](https://ci.huangyuhui.net/) 自行查询校验。
