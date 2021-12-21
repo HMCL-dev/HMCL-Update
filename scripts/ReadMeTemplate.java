@@ -118,7 +118,7 @@ public class ReadMeTemplate {
                             """.formatted(channel.artifactId(), version));
         });
 
-        builder.append('\n');
+        builder.append("\n\n");
 
         builder.append("[HMCL CI](https://ci.huangyuhui.net/) 提供文件 SHA-1 校验码，请自行校验文件完整性。\n");
 
@@ -134,7 +134,7 @@ public class ReadMeTemplate {
                     * `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.gz
                     * `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.xz
                                         
-                    您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新：
+                    您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新至 HMCL %2$s：
                                         
                     ```
                     -Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
