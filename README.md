@@ -7,13 +7,13 @@
 
 下载稳定版 v3.5.2:
 
-* `.exe`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.exe" download="HMCL-3.5.2.exe" rel="nofollow">HMCL-3.5.2.exe</a>
-* `.jar`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar" download="HMCL-3.5.2.jar" rel="nofollow">HMCL-3.5.2.jar</a>
+* `.exe`：[hmcl-stable-3.5.2.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.exe)
+* `.jar`：[hmcl-stable-3.5.2.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar)
 
 下载测试版 v3.5.2.216:
 
-* `.exe`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.216/hmcl-dev-3.5.2.216.exe" download="HMCL-3.5.2.216.exe" rel="nofollow">HMCL-3.5.2.216.exe</a>
-* `.jar`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.216/hmcl-dev-3.5.2.216.jar" download="HMCL-3.5.2.216.jar" rel="nofollow">HMCL-3.5.2.216.jar</a>
+* `.exe`：[hmcl-dev-3.5.2.216.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.216/hmcl-dev-3.5.2.216.exe)
+* `.jar`：[hmcl-dev-3.5.2.216.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.216/hmcl-dev-3.5.2.216.jar)
 
 
 
