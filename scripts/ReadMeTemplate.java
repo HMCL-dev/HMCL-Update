@@ -166,7 +166,7 @@ public class ReadMeTemplate {
                         URL url = new URL(urlStr);
                         System.out.println("开始预热 " + url);
                         try (var input = url.openStream()) {
-                            input.readAllBytes();
+                            input.readNBytes(10);
                         }
                     } catch (Throwable ex) {
                         System.err.printf("预热 %s 时发生错误%n", urlStr);
