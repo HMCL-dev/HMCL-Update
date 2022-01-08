@@ -113,8 +113,8 @@ public class ReadMeTemplate {
         versions.forEach((channel, version) -> {
             builder.append("下载%s v%s:\n\n".formatted(channel.chineseName, version))
                     .append("""
-                            * `.exe`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe" download="HMCL-%2$s.exe" rel="nofollow">HMCL-%2$s.exe</a>
-                            * `.jar`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar" download="HMCL-%2$s.jar" rel="nofollow">HMCL-%2$s.jar</a>
+                            * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
+                            * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
                                                         
                             """.formatted(channel.artifactId(), version));
         });
@@ -164,6 +164,7 @@ public class ReadMeTemplate {
                 .forEach(urlStr -> {
                     try {
                         URL url = new URL(urlStr);
+                        System.out.println("开始预热 " + url);
                         try (var input = url.openStream()) {
                             input.readAllBytes();
                         }
