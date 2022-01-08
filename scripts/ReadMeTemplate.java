@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @SuppressWarnings("CodeBlock2Expr")
 public class ReadMeTemplate {
@@ -112,9 +113,9 @@ public class ReadMeTemplate {
         versions.forEach((channel, version) -> {
             builder.append("下载%s v%s:\n\n".formatted(channel.chineseName, version))
                     .append("""
-                            * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
-                            * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
-                            
+                            * `.exe`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe" download="HMCL-%2$s.exe" rel="nofollow">HMCL-%2$s.exe</a>
+                            * `.jar`：<a href="https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar" download="HMCL-%2$s.jar" rel="nofollow">HMCL-%2$s.jar</a>
+                                                        
                             """.formatted(channel.artifactId(), version));
         });
 
@@ -128,7 +129,7 @@ public class ReadMeTemplate {
         versions.forEach((channel, version) -> {
             builder.append("""
                     ### %3$s
-                    
+                                        
                     %3$s更新文件链接：
                                         
                     * `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar
@@ -156,6 +157,21 @@ public class ReadMeTemplate {
 
         Files.writeString(file, res, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         addEnv("COMMIT_CHANGE", "true");
+
+        Stream.of("exe", "jar", "pack", "pack.xz", "pack.gz", "json")
+                .map(ext -> "https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
+                .flatMap(template -> versions.entrySet().stream().map(entry -> template.formatted(entry.getKey().artifactId(), entry.getValue())))
+                .forEach(urlStr -> {
+                    try {
+                        URL url = new URL(urlStr);
+                        try (var input = url.openStream()) {
+                            input.readAllBytes();
+                        }
+                    } catch (Throwable ex) {
+                        System.err.printf("预热 %s 时发生错误%n", urlStr);
+                        ex.printStackTrace();
+                    }
+                });
     }
 
     private static void addEnv(String name, String value) throws Exception {
