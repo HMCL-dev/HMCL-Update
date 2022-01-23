@@ -10,10 +10,22 @@
 * `.exe`：[hmcl-stable-3.5.2.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.exe)
 * `.jar`：[hmcl-stable-3.5.2.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar)
 
+您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新稳定版：
+
+```
+-Dhmcl.update_source.override=https://raw.githubusercontent.com/Glavo/HMCL-Update/main/update/stable.json
+```
+
 下载测试版 v3.5.2.217:
 
 * `.exe`：[hmcl-dev-3.5.2.217.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.exe)
 * `.jar`：[hmcl-dev-3.5.2.217.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar)
+
+您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新测试版：
+
+```
+-Dhmcl.update_source.override=https://raw.githubusercontent.com/Glavo/HMCL-Update/main/update/dev.json
+```
 
 
 
@@ -26,29 +38,19 @@
 
 稳定版更新文件链接：
 
-* `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar
-* `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack
-* `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.gz
-* `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.xz
-
-您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新至 HMCL 3.5.2：
-
-```
--Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
-```
+* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar
+* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack
+* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.gz
+* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.pack.xz
+* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.json
 
 ### 测试版
 
 测试版更新文件链接：
 
-* `.jar`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar
-* `.pack`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack
-* `.pack.gz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.gz
-* `.pack.xz`：https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.xz
-
-您可以通过在启动 HMCL 时添加以下 JVM 参数覆盖默认更新源，强制通过上方的 CDN 链接更新至 HMCL 3.5.2.217：
-
-```
--Dhmcl.update_source.override=https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.json
-```
+* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar
+* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack
+* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.gz
+* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.xz
+* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.json
 
