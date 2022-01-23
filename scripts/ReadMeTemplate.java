@@ -20,7 +20,7 @@ public class ReadMeTemplate {
         versions.forEach((channel, version) -> {
             builder.append("""
                             ### %4$s
-                            https://img.shields.io/maven-central/v/org.glavo.hmcl/%1$s?label=%4$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)
+                            [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/%1$s?label=%4$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)
                             
                             下载%4$s v%2$s:
                             
