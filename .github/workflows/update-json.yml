@@ -1,13 +1,8 @@
-name: Generate README
+name: Generate Update Json
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'scripts/ReadMeTemplate.java'
   workflow_dispatch:
   schedule:
-    - cron: '15 * * * *'
+    - cron: '20 * * * *'
 
 jobs:
   generate-readme:
@@ -21,14 +16,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
       - name: Generate README
-        run: ./scripts/generate-readme.sh
+        run: ./scripts/run-script.sh UpdateJson
       - name: Commit changes
         if: ${{ env.COMMIT_CHANGE == 'true' }}
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add -A
-          git commit -m "[BOT] Update README.md"
+          git commit -m "[BOT] Update version json"
       - name: Publish changes
         if: ${{ env.COMMIT_CHANGE == 'true' }}
         uses: ad-m/github-push-action@master

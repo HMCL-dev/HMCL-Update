@@ -47,7 +47,7 @@ jobs:
           export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber'`
           java ./scripts/ParseVersion.java "$HMCL_EXE_FILE_NAME"
       - name: Check for existing version
-        run: java ./scripts/CheckExistingVersion.java
+        run: ./scripts/run-script.sh CheckExistingVersion
       - name: Publish to Maven Central
         if: ${{ env.need_update == 'true' }}
         run: ./gradlew --no-daemon publishToSonatype closeAndReleaseSonatypeStagingRepository
