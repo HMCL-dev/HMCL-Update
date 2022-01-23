@@ -15,17 +15,13 @@ public class ReadMeTemplate {
         builder.append("# Hello Minecraft! Launcher 更新分发\n\n")
                 .append("本仓库用于将 HMCL 推送至 Maven Central 上，并获取阿里云镜像链接。\n\n");
 
-        versions.forEach((channel, version) -> {
-            builder.append(
-                    "[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/%1$s?label=%3$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)\n".formatted(
-                            channel.artifactId(), version, channel.chineseName()
-                    ));
-        });
-
         builder.append('\n');
 
         versions.forEach((channel, version) -> {
             builder.append("""
+                            ### %4$s
+                            https://img.shields.io/maven-central/v/org.glavo.hmcl/%1$s?label=%4$s)](https://search.maven.org/artifact/org.glavo.hmcl/%1$s/%2$s/pom)
+                            
                             下载%4$s v%2$s:
                             
                             * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
