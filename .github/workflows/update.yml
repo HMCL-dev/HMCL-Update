@@ -36,6 +36,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   generate-update-json:
     runs-on: ubuntu-latest
+    needs: generate-readme
     steps:
       - uses: actions/checkout@v2
         with:
