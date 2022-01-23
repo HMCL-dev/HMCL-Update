@@ -16,12 +16,12 @@
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
 
-### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.217/pom)
+### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.218/pom)
 
-下载测试版 v3.5.2.217:
+下载测试版 v3.5.2.218:
 
-* `.exe`：[hmcl-dev-3.5.2.217.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.exe)
-* `.jar`：[hmcl-dev-3.5.2.217.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar)
+* `.exe`：[hmcl-dev-3.5.2.218.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.exe)
+* `.jar`：[hmcl-dev-3.5.2.218.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.jar)
 
 您可以在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容，指定 HMCL 使用本更新源更新至最新测试版：
 
@@ -50,9 +50,9 @@
 
 测试版更新文件链接：
 
-* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar
-* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack
-* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.gz
-* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.pack.xz
-* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.json
+* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.jar
+* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.pack
+* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.pack.gz
+* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.pack.xz
+* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.json
 
