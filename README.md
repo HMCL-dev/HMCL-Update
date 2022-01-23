@@ -10,7 +10,7 @@
 * `.exe`：[hmcl-stable-3.5.2.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.exe)
 * `.jar`：[hmcl-stable-3.5.2.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.2/hmcl-stable-3.5.2.jar)
 
-您可以将以下内容添加至环境变量 `JAVA_TOOL_OPTIONS` 中使用本更新源覆盖默认更新源，使 HMCL 更新至最新稳定版：
+您可以在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容，指定 HMCL 使用本更新源更新至最新稳定版：
 
 ```
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
@@ -21,7 +21,7 @@
 * `.exe`：[hmcl-dev-3.5.2.217.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.exe)
 * `.jar`：[hmcl-dev-3.5.2.217.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.217/hmcl-dev-3.5.2.217.jar)
 
-您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新测试版：
+您可以在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容，指定 HMCL 使用本更新源更新至最新测试版：
 
 ```
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json
