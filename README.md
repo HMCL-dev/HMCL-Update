@@ -13,7 +13,7 @@
 您可以将以下内容添加至环境变量 `JAVA_TOOL_OPTIONS` 中使用本更新源覆盖默认更新源，使 HMCL 更新至最新稳定版：
 
 ```
--Dhmcl.update_source.override=https://raw.githubusercontent.com/Glavo/HMCL-Update/main/update/stable.json
+-Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
 
 下载测试版 v3.5.2.217:
@@ -24,7 +24,7 @@
 您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新测试版：
 
 ```
--Dhmcl.update_source.override=https://raw.githubusercontent.com/Glavo/HMCL-Update/main/update/dev.json
+-Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json
 ```
 
 
