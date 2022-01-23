@@ -21,7 +21,7 @@ public class UpdateJson {
 
         versions.forEach((channel, version) -> {
             try {
-                URL remoteJson = new URL("https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json".formatted(channel.artifactId(), version));
+                URL remoteJson = new URL("https://repo1.maven.org/maven2/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json".formatted(channel.artifactId(), version));
                 System.out.println("Fetch update json from " + remoteJson);
 
                 HttpURLConnection connection = (HttpURLConnection) remoteJson.openConnection();
