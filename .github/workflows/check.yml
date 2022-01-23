@@ -45,7 +45,7 @@ jobs:
           
           export HMCL_EXE_FILE_NAME=`cat ci.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
           export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber'`
-          java ./scripts/ParseVersion.java "$HMCL_EXE_FILE_NAME"
+          ./scripts/run-script.sh ParseVersion "$HMCL_EXE_FILE_NAME"
       - name: Check for existing version
         run: ./scripts/run-script.sh CheckExistingVersion
       - name: Publish to Maven Central

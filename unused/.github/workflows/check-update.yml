@@ -35,7 +35,7 @@ jobs:
       - name: Parse version
         run: |
           export HMCL_EXE_FILE_NAME=`cat lastSuccessfulBuild.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
-          java ./scripts/ParseVersion.java "$HMCL_UPDATE_CHANNEL" "$HMCL_EXE_FILE_NAME"
+          ./scripts/run-script.sh ParseVersion "$HMCL_UPDATE_CHANNEL" "$HMCL_EXE_FILE_NAME"
       - name: Check for existing version
         run: |
           NEED_UPDATE=true
