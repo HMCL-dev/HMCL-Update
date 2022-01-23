@@ -30,3 +30,15 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sync to Gitee
+        if: ${{ env.COMMIT_CHANGE == 'true' }}
+        uses: Yikun/hub-mirror-action@v1.1
+        with:
+          src: github/Glavo
+          dst: gitee/Glavo
+          static_list: 'HMCL-Update'
+          force_update: true
+          debug: true
+          dst_key: ${{ secrets.GITEE_SYNC_BOT_PRIVATE_KEY }}
+          dst_token: ${{ secrets.GITEE_SYNC_BOT_TOKEN }}
+          cache_path: /github/workspace/hub-mirror-cache
