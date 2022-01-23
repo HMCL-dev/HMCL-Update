@@ -28,7 +28,6 @@ public class ReadMeTemplate {
             builder.append("""
                             下载%4$s v%2$s:
                             
-                            
                             * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
                             * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
                             
