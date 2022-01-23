@@ -34,7 +34,7 @@ public class ReadMeTemplate {
                             您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新%4$s：
                                         
                             ```
-                            -Dhmcl.update_source.override=https://raw.githubusercontent.com/Glavo/HMCL-Update/main/update/%3$s.json
+                            -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/%3$s.json
                             ```
                             
                             """.formatted(channel.artifactId(), version, channel.name(), channel.chineseName()));
