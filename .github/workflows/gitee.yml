@@ -2,6 +2,10 @@ name: Sync to Gitee
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Update version JSON', 'Update README']
+    types:
+      - completed
 
 jobs:
   run:
