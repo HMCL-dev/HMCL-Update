@@ -4,7 +4,7 @@
 
 
 ### 稳定版
-https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.2/pom)
+[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.2/pom)
 
 下载稳定版 v3.5.2:
 
@@ -18,7 +18,7 @@ https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定�
 ```
 
 ### 测试版
-https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.217/pom)
+[![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.217/pom)
 
 下载测试版 v3.5.2.217:
 
