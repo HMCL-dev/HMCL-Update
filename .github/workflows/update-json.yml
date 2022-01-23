@@ -5,7 +5,7 @@ on:
     - cron: '20 * * * *'
 
 jobs:
-  generate-readme:
+  generate-update-json:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
