@@ -45,7 +45,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Generate README
+      - name: Update Json
         run: ./scripts/run-script.sh UpdateJson
       - name: Commit changes
         if: ${{ env.COMMIT_CHANGE == 'true' }}
