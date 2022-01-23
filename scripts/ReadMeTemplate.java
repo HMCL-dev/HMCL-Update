@@ -66,6 +66,8 @@ public class ReadMeTemplate {
             return;
         }
 
+        UpdateJson.main(new String[]{});
+
         Files.writeString(file, res, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         GitHubUtils.addEnv("COMMIT_CHANGE", "true");
 
