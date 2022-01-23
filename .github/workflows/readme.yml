@@ -36,4 +36,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Call update json
         if: ${{ env.COMMIT_CHANGE == 'true' }}
-        uses: Glavo/HMCL-Update/.github/workflows/check.yml@main
+        uses: Glavo/HMCL-Update/.github/workflows/update-json.yml@main
