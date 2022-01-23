@@ -1,8 +1,7 @@
 name: Generate Update Json
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '20 * * * *'
+  workflow_call:
 
 jobs:
   generate-update-json:

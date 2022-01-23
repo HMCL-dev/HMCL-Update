@@ -74,6 +74,7 @@ public class ReadMeTemplate {
         GitHubUtils.addEnv("COMMIT_CHANGE", "true");
 
         Stream.of("exe", "jar", "pack", "pack.xz", "pack.gz", "json")
+                .parallel()
                 .map(ext -> "https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
                 .flatMap(template -> versions.entrySet().stream().map(entry -> template.formatted(entry.getKey().artifactId(), entry.getValue())))
                 .forEach(urlStr -> {

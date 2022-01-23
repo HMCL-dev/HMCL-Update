@@ -32,7 +32,7 @@ public final class ParseVersion {
         String patchVersion = matcher.group("patch");
         String buildNumber = matcher.group("build");
 
-        addEnv("HMCL_VERSION", version);
+        GitHubUtils.addEnv("HMCL_VERSION", version);
         /*
         addEnv("HMCL_MAJOR_VERSION", majorVersion);
         addEnv("HMCL_MINOR_VERSION", minorVersion);
@@ -48,13 +48,7 @@ public final class ParseVersion {
         // addEnv("HMCL_NPM_VERSION", npmVersion);
          */
 
-        addEnv("HMCL_CI_BUILD_NUMBER", ciBuildNumber);
-        addEnv("HMCL_DOWNLOAD_BASE", "%s/%s/artifact/HMCL/build/libs".formatted(channel.ciUrlBase(), ciBuildNumber));
-    }
-
-    private static final Path GITHUB_ENV_FILE = Paths.get(System.getenv("GITHUB_ENV"));
-
-    private static void addEnv(String name, String value) throws Exception {
-        Files.writeString(GITHUB_ENV_FILE, "%s=%s\n".formatted(name, value), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
+        GitHubUtils.addEnv("HMCL_CI_BUILD_NUMBER", ciBuildNumber);
+        GitHubUtils.addEnv("HMCL_DOWNLOAD_BASE", "%s/%s/artifact/HMCL/build/libs".formatted(channel.ciUrlBase(), ciBuildNumber));
     }
 }
