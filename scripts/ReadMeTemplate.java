@@ -31,7 +31,7 @@ public class ReadMeTemplate {
                             * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
                             * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
                             
-                            您可以通过在启动 HMCL 时添加以下 JVM 参数使用本更新源覆盖默认更新源，使 HMCL 更新至最新%4$s：
+                            您可以在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容，指定 HMCL 使用本更新源更新至最新%4$s：
                                         
                             ```
                             -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/%3$s.json
