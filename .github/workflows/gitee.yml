@@ -2,6 +2,8 @@ name: Sync to Gitee
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '30 */3 * * *'
   workflow_run:
     workflows: ['Update version JSON', 'Update README']
     types:
