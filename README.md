@@ -1,6 +1,6 @@
 # Hello Minecraft! Launcher 更新分发
 
-[GitHub](https://github.com/Glavo/HMCL-Update) · [Gitee](https://gitee.com/Glavo/HMCL-Update)
+[GitHub](https://github.com/Glavo/HMCL-Update) • [Gitee](https://gitee.com/Glavo/HMCL-Update)
 
 本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源。
 
