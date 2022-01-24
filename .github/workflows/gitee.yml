@@ -1,8 +1,10 @@
 name: Sync to Gitee
 
 on:
-  push:
   workflow_dispatch:
+  schedule:
+    - cron: '45 6 * * *'
+  #push:
 
 jobs:
   run:
