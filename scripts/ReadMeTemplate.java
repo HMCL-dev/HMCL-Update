@@ -83,8 +83,10 @@ public class ReadMeTemplate {
                             input.readNBytes(10);
                         }
                     } catch (Throwable ex) {
-                        System.out.printf("预热 %s 时发生错误%n", urlStr);
-                        ex.printStackTrace();
+                        synchronized (System.err) {
+                            System.out.printf("预热 %s 时发生错误%n", urlStr);
+                            ex.printStackTrace();
+                        }
                     }
                 });
     }
