@@ -14,19 +14,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Setup SSH
+      - name: Sync to Gitee
         run: |
           mkdir -p ~/gitee/.ssh
           echo "$INPUT_SSH_PRIVATE_KEY" > ~/gitee/.ssh/id_rsa
           chmod 600 ~/gitee/.ssh/id_rsa
+          export GIT_SSH_COMMAND="ssh -v -i ~/gitee/.ssh/id_rsa -o StrictHostKeyChecking=no -F /dev/null"
+          
+          git push --mirror "$INPUT_TARGET_REPO_URL"
         env:
           INPUT_SSH_PRIVATE_KEY:
             ${{ secrets.GITEE_SYNC_BOT_PRIVATE_KEY }}
-      - name: Sync to Gitee
-        run: |
-          export GIT_SSH_COMMAND="ssh -v -i ~/gitee/.ssh/id_rsa -o StrictHostKeyChecking=no -F /dev/null"
-          git remote add mirror "$INPUT_TARGET_REPO_URL"
-          git push --tags --force --prune mirror "refs/remotes/origin/*:refs/heads/*"
-        env:
           INPUT_TARGET_REPO_URL:
             git@gitee.com:Glavo/HMCL-Update.git
