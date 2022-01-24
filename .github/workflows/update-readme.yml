@@ -35,8 +35,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Sync to Gitee
-        uses: pixta-dev/repository-mirroring-action@v1
         if: ${{ env.COMMIT_CHANGE == 'true' }}
+        uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
             git@gitee.com:Glavo/HMCL-Update.git
