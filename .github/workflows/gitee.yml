@@ -22,5 +22,5 @@ jobs:
         with:
           target_repo_url:
             git@gitee.com:Glavo/HMCL-Update.git
-          ssh_private_key: # <-- use 'secrets' to pass credential information.
+          ssh_private_key:
             ${{ secrets.GITEE_SYNC_BOT_PRIVATE_KEY }}
