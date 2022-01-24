@@ -1,6 +1,6 @@
 # Hello Minecraft! Launcher 更新分发
 
-本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源。
+本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源，提前访问最新版本。
 
 
 ### 稳定版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.3/pom)
