@@ -29,3 +29,11 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Sync to Gitee
+        if: ${{ env.COMMIT_CHANGE == 'true' }}
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            git@gitee.com:Glavo/HMCL-Update.git
+          ssh_private_key:
+            ${{ secrets.GITEE_SYNC_BOT_PRIVATE_KEY }}
