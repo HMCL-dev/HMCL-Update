@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: '45 6 * * *'
   push:
+    paths-ignore:
+      - 'scripts/ReadMeTemplate.java'
 
 jobs:
   run:
