@@ -12,10 +12,15 @@ public class ReadMeTemplate {
         Map<Channel, String> versions = Channel.fetchVersions(true);
         StringBuilder builder = new StringBuilder();
 
-        builder.append("# Hello Minecraft! Launcher 更新分发\n\n")
-                .append("本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源。\n\n");
+        builder.append("""
+                # Hello Minecraft! Launcher 更新分发
 
-        builder.append('\n');
+                [GitHub](https://github.com/Glavo/HMCL-Update) · [Gitee](https://gitee.com/Glavo/HMCL-Update)
+
+                本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源。
+
+
+                """);
 
         versions.forEach((channel, version) -> {
             builder.append("""
