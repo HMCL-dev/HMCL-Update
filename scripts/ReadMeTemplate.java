@@ -33,6 +33,7 @@ public class ReadMeTemplate {
                             
                             您可以下载脚本 [%3$s.bat](%5$s)，通过运行它自动指定 HMCL 使用本更新源更新至最新%4$s。
                             
+                            脚本由 GitHub Action 自动生成，内容位于 [update/dev.bat](https://gitee.com/Glavo/HMCL-Update/blob/main/update/%3$s.bat)，请自行验证安全性。
                             除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现同样的功能：
                                         
                             ```
