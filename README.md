@@ -22,8 +22,6 @@
 
 此脚本非 HMCL 官方提供，您可以在 [update/stable.bat](update/stable.bat) 中查看其源码，请自行校验安全性。
 
-**设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS'（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，请从其中删除 `-Dhmcl.update_source.override=...` 一项） 即可以复位使用官方源。**
-
 ### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.218/pom)
 
 下载测试版 v3.5.2.218:
@@ -41,9 +39,9 @@
 
 此脚本非 HMCL 官方提供，您可以在 [update/dev.bat](update/dev.bat) 中查看其源码，请自行校验安全性。
 
+
+
 **设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS'（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，请从其中删除 `-Dhmcl.update_source.override=...` 一项） 即可以复位使用官方源。**
-
-
 
 [HMCL CI](https://ci.huangyuhui.net/) 提供文件哈希校验码，请自行校验文件完整性。
 ## 更新文件
