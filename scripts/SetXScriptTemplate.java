@@ -13,9 +13,9 @@ public class SetXScriptTemplate {
             // https://stackoverflow.com/a/59571160/7659948
             String res = """
                     @echo off
-                    chcp 65001
                     SETLOCAL EnableDelayedExpansion
-                    set HMCL_UPDATE_ARG="-Dhmcl.update_source.override="
+                    chcp 65001
+                    set HMCL_UPDATE_ARG=-Dhmcl.update_source.override=
                     set HMCL_UPDATE_JSON=$$HMCL_UPDATE_JSON$$
                     set HMCL_UPDATE_JAVA_OPTION=%HMCL_UPDATE_ARG%%HMCL_UPDATE_JSON%
                     if "%JAVA_TOOL_OPTIONS%JUST_TEST"=="JUST_TEST" (
@@ -29,7 +29,7 @@ public class SetXScriptTemplate {
                             powershell -Command "SetX JAVA_TOOL_OPTIONS $(If ($env:_TEMP_JAVA_TOOL_OPTIONS -Match '(?<=\\s|^^)-Dhmcl\\.update_source\\.override=\\S*') {$env:_TEMP_JAVA_TOOL_OPTIONS -replace '(?<=\\s|^^)-Dhmcl\\.update_source\\.override=\\S*', $env:HMCL_UPDATE_JAVA_OPTION} Else {\\"$env:_TEMP_JAVA_TOOL_OPTIONS $env:HMCL_UPDATE_JAVA_OPTION\\"})"
                         )
                     )
-                    """.replace("$$HMCL_UPDATE_JSON$$", url);
+                    """.replace("$$HMCL_UPDATE_JSON$$", url).replace("\n", "\r\n");
 
             if (FileUtils.writeIfChanged(jsonDir.resolve(channel.name() + ".bat"), res)) {
                 changed = true;

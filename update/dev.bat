@@ -1,7 +1,7 @@
 @echo off
-chcp 65001
 SETLOCAL EnableDelayedExpansion
-set HMCL_UPDATE_ARG="-Dhmcl.update_source.override="
+chcp 65001
+set HMCL_UPDATE_ARG=-Dhmcl.update_source.override=
 set HMCL_UPDATE_JSON=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json
 set HMCL_UPDATE_JAVA_OPTION=%HMCL_UPDATE_ARG%%HMCL_UPDATE_JSON%
 if "%JAVA_TOOL_OPTIONS%JUST_TEST"=="JUST_TEST" (
