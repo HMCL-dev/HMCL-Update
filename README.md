@@ -20,7 +20,7 @@
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
 
-此脚本非 HMCL 官方提供，您可以在 [update/stable.bat](update/stable.bat) 中查看其源码，请自行校验安全性。
+此脚本非 HMCL 官方提供，您可以在 [update/stable.bat](update/stable.bat) 中查看其源码，请自行校验完整性与安全性。
 
 ### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.218/pom)
 
@@ -37,7 +37,7 @@
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json
 ```
 
-此脚本非 HMCL 官方提供，您可以在 [update/dev.bat](update/dev.bat) 中查看其源码，请自行校验安全性。
+此脚本非 HMCL 官方提供，您可以在 [update/dev.bat](update/dev.bat) 中查看其源码，请自行校验完整性与安全性。
 
 
 
