@@ -10,7 +10,7 @@
 
 下载稳定版 v3.5.3:
 
-_提示：一般用户请选择.exe版本_
+_提示：一般用户请选择`.exe`版本_
 
 * `.exe`：[hmcl-stable-3.5.3.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.exe)
 * `.jar`：[hmcl-stable-3.5.3.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.jar)
@@ -28,11 +28,13 @@ _提示：一般用户请选择.exe版本_
 setx "JAVA_TOOL_OPTIONS" "-Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json"
 ```
 
+[**HMCL CI**](https://ci.huangyuhui.net/job/HMCL-stable/) **提供文件哈希校验码，请自行校验文件完整性。**
+
 ### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.218/pom)
 
 下载测试版 v3.5.2.218:
 
-_提示：一般用户请选择.exe版本_
+_提示：一般用户请选择`.exe`版本_
 
 * `.exe`：[hmcl-dev-3.5.2.218.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.exe)
 * `.jar`：[hmcl-dev-3.5.2.218.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.jar)
@@ -51,8 +53,8 @@ _提示：一般用户请选择.exe版本_
 setx "JAVA_TOOL_OPTIONS" "-Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json"
 ```
 
+[**HMCL CI**](https://ci.huangyuhui.net/job/HMCL/) **提供文件哈希校验码，请自行校验文件完整性。**
 
-[HMCL CI](https://ci.huangyuhui.net/) 提供文件哈希校验码，请自行校验文件完整性。
 ## 更新文件
 
 以下文件链接用于直接访问 HMCL 更新文件，通常用于 HMCL 自动更新功能，**一般用户请忽略**。
