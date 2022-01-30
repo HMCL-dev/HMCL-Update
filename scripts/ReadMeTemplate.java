@@ -46,7 +46,7 @@ public class ReadMeTemplate {
 
         builder.append("\n\n");
 
-        builder.append("**设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS'（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，请从其中删除 `-Dhmcl.update_source.override=...` 一项） 即可以复位使用官方源。**\n\n");
+        builder.append("**设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS' 即可以恢复使用官方源。（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，从其中删除 `-Dhmcl.update_source.override=...` 一项即可。）**\n\n");
 
         builder.append("[HMCL CI](https://ci.huangyuhui.net/) 提供文件哈希校验码，请自行校验文件完整性。\n");
 
