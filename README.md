@@ -2,7 +2,7 @@
 
 [GitHub](https://github.com/Glavo/HMCL-Update) • [Gitee](https://gitee.com/Glavo/HMCL-Update)
 
-本仓库用于维护 HMCL 更新源 CDN。我们通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖默认更新源。
+本仓库用于维护 HMCL 更新文件下载 CDN，同时提供一个非官方更新源。HMCL 官方通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖官方更新源。
 
 
 ### 稳定版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.3/pom)
@@ -12,13 +12,17 @@
 * `.exe`：[hmcl-stable-3.5.3.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.exe)
 * `.jar`：[hmcl-stable-3.5.3.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.jar)
 
-您可以下载脚本 [stable.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957979/download/stable.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新稳定版。
+您可以下载脚本 [stable.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957979/download/stable.bat)，通过运行它自动指定 HMCL 使用本非官方更新源更新至最新稳定版。
 
-除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现同样的功能：
+除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现与脚本相同的功能：
 
 ```
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
+
+此脚本非 HMCL 官方提供，您可以在 [update/stable.bat](update/stable.bat) 中查看其源码，请自行校验安全性。
+
+**设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS'（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，请从其中删除 `-Dhmcl.update_source.override=...` 一项） 即可以复位使用官方源。**
 
 ### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.2.218/pom)
 
@@ -27,13 +31,17 @@
 * `.exe`：[hmcl-dev-3.5.2.218.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.exe)
 * `.jar`：[hmcl-dev-3.5.2.218.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.jar)
 
-您可以下载脚本 [dev.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957978/download/dev.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新测试版。
+您可以下载脚本 [dev.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957978/download/dev.bat)，通过运行它自动指定 HMCL 使用本非官方更新源更新至最新测试版。
 
-除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现同样的功能：
+除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现与脚本相同的功能：
 
 ```
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/dev.json
 ```
+
+此脚本非 HMCL 官方提供，您可以在 [update/dev.bat](update/dev.bat) 中查看其源码，请自行校验安全性。
+
+**设置下载源后，HMCL 会忽略官方下载源。删除环境变量 'JAVA_TOOL_OPTIONS'（如果您自定义了 `JAVA_TOOL_OPTIONS` 环境变量，请从其中删除 `-Dhmcl.update_source.override=...` 一项） 即可以复位使用官方源。**
 
 
 
