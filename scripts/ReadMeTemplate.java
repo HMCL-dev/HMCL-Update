@@ -66,7 +66,7 @@ public class ReadMeTemplate {
 
         var file = Paths.get("README.md");
 
-        if (Files.exists(file) && Files.readString(file).equals(res)) {
+        if (!FileUtils.writeIfChanged(file, res)) {
             System.out.println("README has not changed");
             return;
         }
