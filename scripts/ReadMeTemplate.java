@@ -39,7 +39,7 @@ public class ReadMeTemplate {
                             -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/%3$s.json
                             ```
                             
-                            此脚本非 HMCL 官方提供，您可以在 [update/%3$s.bat](update/%3$s.bat) 中查看其源码，请自行校验安全性。
+                            此脚本非 HMCL 官方提供，您可以在 [update/%3$s.bat](update/%3$s.bat) 中查看其源码，请自行校验完整性与安全性。
                             
                             """.formatted(channel.artifactId(), version, channel.name(), channel.chineseName(), channel.setEnvScript()));
         });
