@@ -31,7 +31,7 @@ public class ReadMeTemplate {
                             * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
                             * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
                             
-                            您可以下载脚本 [%3$s.bat](%5$s)，通过运行它自动指定 HMCL 使用本非官方更新源更新至最新%4$s。
+                            您可以下载脚本 [%3$s.bat](%5$s)，通过运行它自动指定 HMCL 使用本更新源更新至最新%4$s。
                             
                             除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现与脚本相同的功能：
                                         
