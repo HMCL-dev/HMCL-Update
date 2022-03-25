@@ -12,7 +12,7 @@
 * `.exe`：[hmcl-stable-3.5.3.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.exe)
 * `.jar`：[hmcl-stable-3.5.3.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.jar)
 
-您可以下载脚本 [stable.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957979/download/stable.bat)，通过运行它自动指定 HMCL 使用本非官方更新源更新至最新稳定版。
+您可以下载脚本 [stable.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957979/download/stable.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新稳定版。
 
 除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现与脚本相同的功能：
 
@@ -29,7 +29,7 @@
 * `.exe`：[hmcl-dev-3.5.2.218.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.exe)
 * `.jar`：[hmcl-dev-3.5.2.218.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.2.218/hmcl-dev-3.5.2.218.jar)
 
-您可以下载脚本 [dev.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957978/download/dev.bat)，通过运行它自动指定 HMCL 使用本非官方更新源更新至最新测试版。
+您可以下载脚本 [dev.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957978/download/dev.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新测试版。
 
 除此之外，您也可以手动在环境变量 `JAVA_TOOL_OPTIONS` 中添加以下内容实现与脚本相同的功能：
 
