@@ -54,9 +54,6 @@
 稳定版更新文件链接：
 
 * `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.jar
-* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.pack
-* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.pack.gz
-* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.pack.xz
 * `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.3/hmcl-stable-3.5.3.json
 
 ### 测试版
@@ -64,8 +61,5 @@
 测试版更新文件链接：
 
 * `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.3.228/hmcl-dev-3.5.3.228.jar
-* `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.3.228/hmcl-dev-3.5.3.228.pack
-* `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.3.228/hmcl-dev-3.5.3.228.pack.gz
-* `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.3.228/hmcl-dev-3.5.3.228.pack.xz
 * `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.3.228/hmcl-dev-3.5.3.228.json
 
