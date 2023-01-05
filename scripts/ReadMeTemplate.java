@@ -60,9 +60,6 @@ public class ReadMeTemplate {
                     %3$s更新文件链接：
                                         
                     * `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar
-                    * `.pack`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack
-                    * `.pack.gz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.gz
-                    * `.pack.xz`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.pack.xz
                     * `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
 
                     """.formatted(channel.artifactId(), version, channel.chineseName()));
@@ -82,7 +79,7 @@ public class ReadMeTemplate {
         Files.writeString(file, res, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         GitHubUtils.addEnv("COMMIT_CHANGE", "true");
 
-        Stream.of("exe", "jar", "pack", "pack.xz", "pack.gz", "json")
+        Stream.of("exe", "jar", "json")
                 .parallel()
                 .map(ext -> "https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
                 .flatMap(template -> versions.entrySet().stream().map(entry -> template.formatted(entry.getKey().artifactId(), entry.getValue())))

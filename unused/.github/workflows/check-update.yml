@@ -50,7 +50,7 @@ jobs:
         run: |
           cd "./channels/$HMCL_UPDATE_CHANNEL/"
           
-          EXTENSIONS=('exe' 'jar' 'pack' 'pack.gz' 'pack.xz')
+          EXTENSIONS=('exe' 'jar')
           for ext in ${EXTENSIONS[@]}; do
             FILE_NAME="HMCL-$HMCL_VERSION.$ext"
             wget "$HMCL_DOWNLOAD_BASE/$FILE_NAME"

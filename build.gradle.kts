@@ -10,7 +10,7 @@ plugins {
 val HMCL_VERSION_PATTERN = Regex("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$")
 val HMCL_BUILD_NUMBER_PATTERN = Regex("^[0-9]+$")
 
-val exts = listOf("exe", "jar", "pack", "pack.gz", "pack.xz")
+val exts = listOf("exe", "jar")
 
 data class HMCLChannel(
     val name: String,
@@ -160,10 +160,6 @@ val generateUpdateJson = tasks.create("generateUpdateJson") {
             downloadVerifyDir.resolve("HMCL-$hmclVersion.$ext.sha1").readText().trim()
 
         val data = mapOf(
-            "pack" to downloadLink("pack"),
-            "packsha1" to sha1("pack"),
-            "packxz" to downloadLink("pack.xz"),
-            "packxzsha1" to sha1("pack.xz"),
             "jar" to downloadLink("jar"),
             "jarsha1" to sha1("jar"),
             "version" to hmclVersion,
