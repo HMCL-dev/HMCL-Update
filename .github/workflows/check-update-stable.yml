@@ -7,7 +7,7 @@ on:
 
 jobs:
   check-update-stable:
-    uses: Glavo/HMCL-Update/.github/workflows/check.yml@main
+    uses: HMCL-dev/HMCL-Update/.github/workflows/check.yml@main
     with:
       channel: 'stable'
     secrets:

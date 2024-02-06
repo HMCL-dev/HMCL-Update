@@ -10,7 +10,7 @@ on:
 
 jobs:
   run:
-    if: ${{ github.repository_owner == 'Glavo' }}
+    if: ${{ github.repository_owner == 'HMCL-dev' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
