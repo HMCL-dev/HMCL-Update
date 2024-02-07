@@ -63,6 +63,7 @@ if (!HMCL_BUILD_NUMBER_PATTERN.matches(ciBuildNumber)) {
     throw GradleException("Bad HMCL CI build number: $ciBuildNumber")
 }
 
+val buildDir = layout.buildDirectory.get().asFile
 val downloadDir = buildDir.resolve("downloads")
 val downloadVerifyDir = downloadDir.resolve("sha1")
 
