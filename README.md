@@ -5,12 +5,12 @@
 本仓库用于维护 HMCL 更新文件下载 CDN，同时提供一个非官方更新源。HMCL 官方通常会在新版本发布后将它们及时推送给用户，但您也可以手动指定本更新源覆盖官方更新源。
 
 
-### 稳定版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.6/pom)
+### 稳定版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-stable?label=稳定版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-stable/3.5.7/pom)
 
-下载稳定版 v3.5.6:
+下载稳定版 v3.5.7:
 
-* `.exe`：[hmcl-stable-3.5.6.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.6/hmcl-stable-3.5.6.exe)
-* `.jar`：[hmcl-stable-3.5.6.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.6/hmcl-stable-3.5.6.jar)
+* `.exe`：[hmcl-stable-3.5.7.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.7/hmcl-stable-3.5.7.exe)
+* `.jar`：[hmcl-stable-3.5.7.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.7/hmcl-stable-3.5.7.jar)
 
 您可以下载脚本 [stable.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957979/download/stable.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新稳定版。
 
@@ -50,8 +50,8 @@
 
 稳定版更新文件链接：
 
-* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.6/hmcl-stable-3.5.6.jar
-* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.6/hmcl-stable-3.5.6.json
+* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.7/hmcl-stable-3.5.7.jar
+* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-stable/3.5.7/hmcl-stable-3.5.7.json
 
 ### 测试版
 
