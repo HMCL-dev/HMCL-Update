@@ -25,11 +25,11 @@ jobs:
     env:
       HMCL_UPDATE_CHANNEL: ${{ inputs.channel }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Install jq
         run: sudo apt-get install -y jq
       - name: Fetch build information
