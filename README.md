@@ -22,12 +22,12 @@
 
 此脚本非 HMCL 官方提供，您可以在 [update/stable.bat](update/stable.bat) 中查看其源码，请自行校验完整性与安全性。
 
-### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.9.257/pom)
+### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.9.258/pom)
 
-下载测试版 v3.5.9.257:
+下载测试版 v3.5.9.258:
 
-* `.exe`：[hmcl-dev-3.5.9.257.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.257/hmcl-dev-3.5.9.257.exe)
-* `.jar`：[hmcl-dev-3.5.9.257.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.257/hmcl-dev-3.5.9.257.jar)
+* `.exe`：[hmcl-dev-3.5.9.258.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.258/hmcl-dev-3.5.9.258.exe)
+* `.jar`：[hmcl-dev-3.5.9.258.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.258/hmcl-dev-3.5.9.258.jar)
 
 您可以下载脚本 [dev.bat](https://gitee.com/Glavo/HMCL-Update/attach_files/957978/download/dev.bat)，通过运行它自动指定 HMCL 使用本更新源更新至最新测试版。
 
@@ -57,6 +57,6 @@
 
 测试版更新文件链接：
 
-* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.257/hmcl-dev-3.5.9.257.jar
-* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.257/hmcl-dev-3.5.9.257.json
+* `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.258/hmcl-dev-3.5.9.258.jar
+* `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/hmcl-dev/3.5.9.258/hmcl-dev-3.5.9.258.json
 
