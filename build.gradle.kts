@@ -3,8 +3,8 @@ import java.security.MessageDigest
 plugins {
     signing
     `maven-publish`
-    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
-    id("de.undercouch.download") version "4.1.2"
+    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
+    id("de.undercouch.download") version "5.6.0"
 }
 
 val HMCL_VERSION_PATTERN = Regex("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$")
@@ -210,9 +210,15 @@ configure<PublishingExtension> {
                         name.set("Yuhui Huang")
                         email.set("jackhuang1998@gmail.com")
                     }
+
+                    developer {
+                        id.set("Glavo")
+                        name.set("Glavo")
+                        email.set("zjx001202@gmail.com")
+                    }
                 }
                 scm {
-                    url.set("https://github.com/huanghongxun/HMCL")
+                    url.set("https://github.com/HMCL-dev/HMCL")
                 }
             }
         }
