@@ -18,9 +18,9 @@
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
 
-### 测试版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=测试版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.9.261/pom)
+### 开发版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=开发版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.5.9.261/pom)
 
-下载测试版 v3.5.9.261:
+下载开发版 v3.5.9.261:
 
 * `.exe`：[hmcl-dev-3.5.9.261.exe](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.5.9.261/hmcl-dev-3.5.9.261.exe)
 * `.jar`：[hmcl-dev-3.5.9.261.jar](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.5.9.261/hmcl-dev-3.5.9.261.jar)
