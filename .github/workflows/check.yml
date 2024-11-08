@@ -44,7 +44,7 @@ jobs:
           esac
           
           export HMCL_EXE_FILE_NAME=`cat ci.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
-          export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber' | sort --reverse | head -n 1`
+          export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber' | sort -n --reverse | head -n 1`
           ./scripts/run-script.sh ParseVersion "$HMCL_EXE_FILE_NAME"
       - name: Check for existing version
         run: ./scripts/run-script.sh CheckExistingVersion
