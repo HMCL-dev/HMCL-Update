@@ -28,8 +28,8 @@ public class ReadMeTemplate {
                             
                             下载%4$s v%2$s:
                             
-                            * `.exe`：[%1$s-%2$s.exe](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
-                            * `.jar`：[%1$s-%2$s.jar](https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
+                            * `.exe`：[%1$s-%2$s.exe](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.exe)
+                            * `.jar`：[%1$s-%2$s.jar](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar)
                             
                             你可以在环境变量 `HMCL_JAVA_OPTS` 中添加以下内容使 HMCL 通过本更新源更新：
                             
@@ -38,23 +38,6 @@ public class ReadMeTemplate {
                             ```
                             
                             """.formatted(channel.artifactId(), version, channel.name(), channel.chineseName()));
-        });
-
-        builder.append("\n\n[HMCL CI](https://ci.huangyuhui.net/) 提供文件哈希校验码，请自行校验文件完整性。\n");
-
-        builder.append("## 更新文件\n\n")
-                .append("以下文件链接用于直接访问 HMCL 更新文件，通常用于 HMCL 自动更新功能，一般用户请忽略。\n\n");
-
-        versions.forEach((channel, version) -> {
-            builder.append("""
-                    ### %3$s
-                    
-                    %3$s更新文件链接：
-                    
-                    * `.jar`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.jar
-                    * `.json`: https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s.json
-
-                    """.formatted(channel.artifactId(), version, channel.chineseName()));
         });
 
         String res = builder.toString();
@@ -73,7 +56,7 @@ public class ReadMeTemplate {
 
         Stream.of("exe", "jar", "json")
                 .parallel()
-                .map(ext -> "https://maven.aliyun.com/repository/central/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
+                .map(ext -> "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
                 .flatMap(template -> versions.entrySet().stream().map(entry -> template.formatted(entry.getKey().artifactId(), entry.getValue())))
                 .forEach(urlStr -> {
                     try {
@@ -89,11 +72,5 @@ public class ReadMeTemplate {
                         }
                     }
                 });
-    }
-
-
-
-    private static String last(String[] args) {
-        return args[args.length - 1];
     }
 }
