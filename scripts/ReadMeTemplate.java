@@ -1,9 +1,23 @@
-import java.net.URL;
+/*
+ * Copyright 2024 Glavo
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
-import java.util.stream.Stream;
 
 @SuppressWarnings("CodeBlock2Expr")
 public class ReadMeTemplate {
@@ -53,24 +67,5 @@ public class ReadMeTemplate {
 
         Files.writeString(file, res, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         GitHubUtils.addEnv("COMMIT_CHANGE", "true");
-
-        Stream.of("exe", "jar", "json")
-                .parallel()
-                .map(ext -> "https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/%1$s/%2$s/%1$s-%2$s." + ext)
-                .flatMap(template -> versions.entrySet().stream().map(entry -> template.formatted(entry.getKey().artifactId(), entry.getValue())))
-                .forEach(urlStr -> {
-                    try {
-                        URL url = new URL(urlStr);
-                        System.out.println("开始预热 " + url);
-                        try (var input = url.openStream()) {
-                            input.readNBytes(10);
-                        }
-                    } catch (Throwable ex) {
-                        synchronized (System.err) {
-                            System.out.printf("预热 %s 时发生错误%n", urlStr);
-                            ex.printStackTrace();
-                        }
-                    }
-                });
     }
 }
