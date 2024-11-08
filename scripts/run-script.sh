@@ -3,5 +3,6 @@ set -e
 
 PROJECT_ROOT_DIR=`realpath "$(dirname $0)/.."`
 
+cd "$PROJECT_ROOT_DIR"
 javac -encoding UTF-8 -d "$PROJECT_ROOT_DIR/out" -cp "$PROJECT_ROOT_DIR/scripts" "$PROJECT_ROOT_DIR/scripts/$1.java"
-java -cp "$PROJECT_ROOT_DIR/out" $1 "${@:2}"
+java -cp "$PROJECT_ROOT_DIR/out" "$1" "${@:2}"

@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Generate README
-        run: ./scripts/generate-readme.sh
+        run: ./scripts/run-script.sh ReadMeTemplate
       - name: Commit changes
         if: ${{ env.COMMIT_CHANGE == 'true' }}
         run: |
