@@ -14,7 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-public record Channel(String name, String chineseName, String ciUrlBase, String setEnvScript) {
+public record Channel(String name, String chineseName, String ciUrlBase) {
     static final List<Channel> channels;
 
     static {
@@ -39,9 +39,8 @@ public record Channel(String name, String chineseName, String ciUrlBase, String 
                 }
 
                 String chineseName = properties.getProperty(name + ".name.chinese");
-                String setEnvScript = properties.getProperty(name + ".set_env.script");
 
-                cs.add(new Channel(name, chineseName, urlBase, setEnvScript));
+                cs.add(new Channel(name, chineseName, urlBase));
             }
             channels = cs;
         } catch (IOException e) {

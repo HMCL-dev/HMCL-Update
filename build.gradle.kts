@@ -17,7 +17,6 @@ data class HMCLChannel(
     val ciUrlBase: String
 ) {
     val artifactId: String = "hmcl-$name"
-
 }
 
 val channels: List<HMCLChannel> = run {
