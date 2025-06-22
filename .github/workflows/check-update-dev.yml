@@ -16,4 +16,3 @@ jobs:
       signingKey: ${{ secrets.SIGNING_KEY }}
       sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
       sonatypePassword: ${{ secrets.SONATYPE_PASSWORD }}
-      sonatypeStagingProfileId: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}

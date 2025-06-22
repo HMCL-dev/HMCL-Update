@@ -16,8 +16,6 @@ on:
         required: true
       sonatypePassword:
         required: true
-      sonatypeStagingProfileId:
-        required: true
 
 jobs:
   check-update:
@@ -50,13 +48,10 @@ jobs:
         run: ./scripts/run-script.sh CheckExistingVersion
       - name: Publish to Maven Central
         if: ${{ env.need_update == 'true' }}
-        run: ./gradlew --no-daemon publishToSonatype closeAndReleaseSonatypeStagingRepository
+        run: ./gradlew --no-daemon --info publishToSonatype closeAndReleaseSonatypeStagingRepository
         env:
           SIGNING_KEY_ID: ${{ secrets.signingKeyId }}
           SIGNING_PASSWORD: ${{ secrets.signingPassword }}
           SIGNING_KEY: ${{ secrets.signingKey }}
           SONATYPE_USERNAME: ${{ secrets.sonatypeUsername }}
           SONATYPE_PASSWORD: ${{ secrets.sonatypePassword }}
-          SONATYPE_STAGING_PROFILE_ID: ${{ secrets.sonatypeStagingProfileId }}
-
-

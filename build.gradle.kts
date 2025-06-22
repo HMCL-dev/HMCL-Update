@@ -248,7 +248,7 @@ if (secretPropsFile.exists()) {
 listOf(
     "sonatypeUsername" to "SONATYPE_USERNAME",
     "sonatypePassword" to "SONATYPE_PASSWORD",
-    "sonatypeStagingProfileId" to "SONATYPE_STAGING_PROFILE_ID",
+    // "sonatypeStagingProfileId" to "SONATYPE_STAGING_PROFILE_ID",
     "signing.keyId" to "SIGNING_KEY_ID",
     "signing.password" to "SIGNING_PASSWORD",
     "signing.key" to "SIGNING_KEY"
