@@ -7,6 +7,8 @@ plugins {
     id("de.undercouch.download") version "5.6.0"
 }
 
+group = "org.glavo.hmcl"
+
 val HMCL_VERSION_PATTERN = Regex("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$")
 val HMCL_BUILD_NUMBER_PATTERN = Regex("^[0-9]+$")
 
