@@ -199,7 +199,7 @@ configure<PublishingExtension> {
             pom {
                 name.set("Hello Minecraft! Launcher ")
                 description.set("A Minecraft Launcher which is multi-functional, cross-platform and popular")
-                url.set("https://github.com/huanghongxun/HMCL")
+                url.set("https://github.com/HMCL-dev/HMCL")
                 licenses {
                     license {
                         name.set("GPL 3.0")
