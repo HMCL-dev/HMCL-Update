@@ -68,7 +68,7 @@ val buildDir = layout.buildDirectory.get().asFile
 val downloadDir = buildDir.resolve("downloads")
 val downloadVerifyDir = downloadDir.resolve("sha1")
 
-val downloadArtifacts = tasks.create<de.undercouch.gradle.tasks.download.Download>("downloadArtifacts") {
+val downloadArtifacts by tasks.registering(de.undercouch.gradle.tasks.download.Download::class) {
     doFirst {
         if (!downloadDir.exists()) {
             downloadDir.mkdirs()
@@ -85,7 +85,7 @@ val downloadArtifacts = tasks.create<de.undercouch.gradle.tasks.download.Downloa
     retries(5)
 }
 
-val downloadVerifyFiles = tasks.create<de.undercouch.gradle.tasks.download.Download>("downloadVerifyFiles") {
+val downloadVerifyFiles by tasks.registering(de.undercouch.gradle.tasks.download.Download::class) {
     doFirst {
         if (!downloadVerifyDir.exists()) {
             downloadVerifyDir.mkdirs()
@@ -102,7 +102,7 @@ val downloadVerifyFiles = tasks.create<de.undercouch.gradle.tasks.download.Downl
     retries(5)
 }
 
-val verifyDownload = tasks.create("verifyDownload") {
+val verifyDownload by tasks.registering {
     dependsOn(downloadArtifacts, downloadVerifyFiles)
 
     doLast {
@@ -147,7 +147,7 @@ val verifyDownload = tasks.create("verifyDownload") {
 }
 
 val updateJsonFile = downloadDir.resolve("HMCL-$hmclVersion.json")
-val generateUpdateJson = tasks.create("generateUpdateJson") {
+val generateUpdateJson by tasks.registering {
     dependsOn(verifyDownload)
 
     doLast {
