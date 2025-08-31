@@ -18,12 +18,12 @@
 -Dhmcl.update_source.override=https://gitee.com/Glavo/HMCL-Update/raw/main/update/stable.json
 ```
 
-## 开发版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=开发版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.6.16.291/pom)
+## 开发版 [![](https://img.shields.io/maven-central/v/org.glavo.hmcl/hmcl-dev?label=开发版)](https://search.maven.org/artifact/org.glavo.hmcl/hmcl-dev/3.6.16.292/pom)
 
-下载开发版 v3.6.16.291:
+下载开发版 v3.6.16.292:
 
-* `.exe`：[hmcl-dev-3.6.16.291.exe](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.6.16.291/hmcl-dev-3.6.16.291.exe)
-* `.jar`：[hmcl-dev-3.6.16.291.jar](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.6.16.291/hmcl-dev-3.6.16.291.jar)
+* `.exe`：[hmcl-dev-3.6.16.292.exe](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.6.16.292/hmcl-dev-3.6.16.292.exe)
+* `.jar`：[hmcl-dev-3.6.16.292.jar](https://mirrors.cloud.tencent.com/nexus/repository/maven-public/org/glavo/hmcl/hmcl-dev/3.6.16.292/hmcl-dev-3.6.16.292.jar)
 
 你可以在环境变量 `HMCL_JAVA_OPTS` 中添加以下内容使 HMCL 通过本更新源更新：
 
