@@ -2,8 +2,8 @@ name: Check Update Dev
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '45 */3 * * *'
+#  schedule:
+#    - cron: '45 */3 * * *'
 
 jobs:
   check-update-dev:

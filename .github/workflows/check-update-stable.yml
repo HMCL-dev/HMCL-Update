@@ -2,8 +2,8 @@ name: Check Update Stable
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '30 */3 * * *'
+#  schedule:
+#    - cron: '30 */3 * * *'
 
 jobs:
   check-update-stable:
