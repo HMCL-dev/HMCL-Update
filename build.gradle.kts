@@ -26,27 +26,19 @@ CheckUpdate.apply(project, hmclChannel)
 val hmclVersion: String = ext.get(CheckUpdate.HMCL_VERSION).toString()
 val hmclDownloadBaseUri: String = ext.get(CheckUpdate.HMCL_DOWNLOAD_BASE_URI).toString()
 
+val existing = CheckExisting.checkExisting(hmclChannel, hmclDownloadBaseUri)
+
 version = hmclVersion
 
 val downloadDir = layout.buildDirectory.dir("downloads")
 
-val checkExisting by tasks.registering(CheckExisting::class) {
-    version.set(hmclVersion)
-    channel.set(hmclChannel)
-}
-
-
-tasks.named("publishToSonatype") {
-    dependsOn(checkExisting)
-}
-
-tasks.named("closeAndReleaseSonatypeStagingRepository") {
-    dependsOn(checkExisting)
+val upload by tasks.registering {
+    if (!existing) {
+        dependsOn("publishToSonatype", "closeAndReleaseSonatypeStagingRepository")
+    }
 }
 
 val downloadArtifacts by tasks.registering(Download::class) {
-    dependsOn(checkExisting)
-
     src("$hmclDownloadBaseUri/HMCL-$hmclVersion.jar")
     src("$hmclDownloadBaseUri/HMCL-$hmclVersion.jar.sha256")
 

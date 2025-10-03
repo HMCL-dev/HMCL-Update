@@ -22,7 +22,6 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
@@ -36,21 +35,11 @@ import java.net.URI;
 import java.net.http.HttpResponse;
 import java.util.regex.Pattern;
 
-public abstract class CheckExisting extends DefaultTask {
+public final class CheckExisting {
     private static final Logger LOGGER = Logging.getLogger(CheckExisting.class);
     private static final Pattern PATTERN = Pattern.compile("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$");
 
-    @Input
-    public abstract Property<@NotNull UpdateChannel> getChannel();
-
-    @Input
-    public abstract Property<@NotNull String> getVersion();
-
-    @TaskAction
-    public void run() throws Exception {
-        UpdateChannel channel = getChannel().get();
-
-        String version = getVersion().get();
+    public static boolean checkExisting(UpdateChannel channel, String version) throws Exception {
         if (!PATTERN.matcher(version).matches()) {
             throw new IllegalArgumentException("Bad HMCL version: " + version);
         }
@@ -71,9 +60,11 @@ public abstract class CheckExisting extends DefaultTask {
             Node item = versionList.item(i);
             if (version.equals(item.getFirstChild().getNodeValue())) {
                 LOGGER.quiet("{} already exists, no update required", version);
-                throw new StopExecutionException();
+                return true;
             }
         }
+
+        return false;
     }
 
 }
