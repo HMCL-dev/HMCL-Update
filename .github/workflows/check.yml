@@ -28,27 +28,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '25'
-      - name: Install jq
-        run: sudo apt-get install -y jq
-      - name: Fetch build information
-        run: |
-          case $HMCL_UPDATE_CHANNEL in
-            dev)    wget -O ci.json https://ci.huangyuhui.net/job/HMCL/lastSuccessfulBuild/api/json;;
-            stable) wget -O ci.json https://ci.huangyuhui.net/job/HMCL-stable/lastSuccessfulBuild/api/json;;
-            *) 
-              echo "Unknown channel: $HMCL_UPDATE_CHANNEL" >&2
-              exit 1
-              ;;
-          esac
-          
-          export HMCL_EXE_FILE_NAME=`cat ci.json | jq -M -r '.artifacts[] | select(.fileName | endswith(".exe")) | .fileName'`
-          export HMCL_CI_BUILD_NUMBER=`cat ci.json | jq -M -r '.actions[] | select(._class == "hudson.plugins.git.util.BuildData") | .buildsByBranchName | .[] | .buildNumber' | sort -n --reverse | head -n 1`
-          ./scripts/run-script.sh ParseVersion "$HMCL_EXE_FILE_NAME"
-      - name: Check for existing version
-        run: ./scripts/run-script.sh CheckExistingVersion
       - name: Publish to Maven Central
         if: ${{ env.need_update == 'true' }}
-        run: ./gradlew --no-daemon --info publishToSonatype closeAndReleaseSonatypeStagingRepository
+        run: ./gradlew --no-daemon --info checkExisting publishToSonatype closeAndReleaseSonatypeStagingRepository -Phmcl.channel=$HMCL_UPDATE_CHANNEL
         env:
           SIGNING_KEY_ID: ${{ secrets.signingKeyId }}
           SIGNING_PASSWORD: ${{ secrets.signingPassword }}
