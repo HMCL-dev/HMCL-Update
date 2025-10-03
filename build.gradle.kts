@@ -26,9 +26,9 @@ CheckUpdate.apply(project, hmclChannel)
 val hmclVersion: String = ext.get(CheckUpdate.HMCL_VERSION).toString()
 val hmclDownloadBaseUri: String = ext.get(CheckUpdate.HMCL_DOWNLOAD_BASE_URI).toString()
 
-val existing = CheckExisting.checkExisting(hmclChannel, hmclDownloadBaseUri)
-
 version = hmclVersion
+
+val existing = CheckExisting.checkExisting(hmclChannel, hmclVersion)
 
 val downloadDir = layout.buildDirectory.dir("downloads")
 
