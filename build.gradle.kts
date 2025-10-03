@@ -35,6 +35,15 @@ val checkExisting by tasks.registering(CheckExisting::class) {
     channel.set(hmclChannel)
 }
 
+
+tasks.named("publishToSonatype") {
+    dependsOn(checkExisting)
+}
+
+tasks.named("closeAndReleaseSonatypeStagingRepository") {
+    dependsOn(checkExisting)
+}
+
 val downloadArtifacts by tasks.registering(Download::class) {
     dependsOn(checkExisting)
 
