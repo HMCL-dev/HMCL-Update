@@ -22,6 +22,7 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.provider.Property;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.StopExecutionException;
 import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Document;
@@ -36,8 +37,6 @@ import java.net.http.HttpResponse;
 import java.util.regex.Pattern;
 
 public abstract class CheckExisting extends DefaultTask {
-    public static final String NEED_UPDATE = "HMCL_NEED_UPDATE";
-
     private static final Logger LOGGER = Logging.getLogger(CheckExisting.class);
     private static final Pattern PATTERN = Pattern.compile("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$");
 
@@ -45,20 +44,20 @@ public abstract class CheckExisting extends DefaultTask {
     public abstract Property<@NotNull UpdateChannel> getChannel();
 
     @Input
-    public abstract Property<@NotNull String> getHMCLVersion();
+    public abstract Property<@NotNull String> getVersion();
 
     @TaskAction
     public void run() throws Exception {
         UpdateChannel channel = getChannel().get();
 
-        String version = System.getenv("HMCL_VERSION");
+        String version = getVersion().get();
         if (!PATTERN.matcher(version).matches()) {
             throw new IllegalArgumentException("Bad HMCL version: " + version);
         }
 
         Document document;
         try (InputStream body = Utils.fetch(
-                URI.create("https://repo1.maven.org/maven2/org/glavo/hmcl/hmcl-%s/maven-metadata.xml".formatted(channel.getMavenArtifactId())),
+                URI.create("https://repo1.maven.org/maven2/org/glavo/hmcl/%s/maven-metadata.xml".formatted(channel.getMavenArtifactId())),
                 HttpResponse.BodyHandlers.ofInputStream()
         )) {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -72,11 +71,9 @@ public abstract class CheckExisting extends DefaultTask {
             Node item = versionList.item(i);
             if (version.equals(item.getFirstChild().getNodeValue())) {
                 LOGGER.quiet("{} already exists, no update required", version);
-                return;
+                throw new StopExecutionException();
             }
         }
-
-        getProject().getExtensions().getExtraProperties().set(NEED_UPDATE, "true");
     }
 
 }

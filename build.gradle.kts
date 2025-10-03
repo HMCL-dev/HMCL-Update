@@ -14,53 +14,32 @@ plugins {
 
 group = "org.glavo.hmcl"
 
-val buildDir = layout.buildDirectory
-val downloadDir = buildDir.dir("downloads")
-
-val channel = project.findProperty("hmcl.channel")?.let { name ->
+val hmclChannel = project.findProperty("hmcl.channel")?.let { name ->
     UpdateChannel.entries.find { channel ->
         channel.name.contentEquals(name.toString(), true)
     } ?: throw GradleException("channel '$name' is not defined")
 } ?: throw GradleException("hmcl.channel is not defined")
 
-val checkUpdate by tasks.registering(CheckUpdate::class) {
-    channel.set(channel)
 
-}
+CheckUpdate.apply(project, hmclChannel)
 
-val hmclVersion by lazy {
-    project.ext[CheckUpdate.HMCL_VERSION]?.toString()
-        ?: throw GradleException("${CheckUpdate.HMCL_VERSION} is not defined")
-}
+val hmclVersion: String = ext.get(CheckUpdate.HMCL_VERSION).toString()
+val hmclDownloadBaseUri: String = ext.get(CheckUpdate.HMCL_DOWNLOAD_BASE_URI).toString()
+
+version = hmclVersion
+
+val downloadDir = layout.buildDirectory.dir("downloads")
 
 val checkExisting by tasks.registering(CheckExisting::class) {
-    dependsOn(checkUpdate)
-
-    onlyIf {
-        ext.has(CheckUpdate.HMCL_VERSION) && ext.has(CheckUpdate.HMCL_DOWNLOAD_BASE_URI)
-    }
-
-    checkUpdate.get().doLast {
-        hmclVersion.set(hmclVersion)
-    }
-
-    channel.set(channel)
+    version.set(hmclVersion)
+    channel.set(hmclChannel)
 }
-
-val needUpdate by lazy { ext.has(CheckExisting.NEED_UPDATE) }
 
 val downloadArtifacts by tasks.registering(Download::class) {
     dependsOn(checkExisting)
 
-    onlyIf { needUpdate }
-
-    checkUpdate.get().doLast {
-        val hmclDownloadUrlBase = project.ext[CheckUpdate.HMCL_DOWNLOAD_BASE_URI]?.toString()
-            ?: throw GradleException("${CheckUpdate.HMCL_DOWNLOAD_BASE_URI} is not defined")
-
-        src("$hmclDownloadUrlBase/HMCL-$hmclVersion.jar")
-        src("$hmclDownloadUrlBase/HMCL-$hmclVersion.jar.sha256")
-    }
+    src("$hmclDownloadBaseUri/HMCL-$hmclVersion.jar")
+    src("$hmclDownloadBaseUri/HMCL-$hmclVersion.jar.sha256")
 
     overwrite(false)
     quiet(false)
@@ -70,8 +49,6 @@ val downloadArtifacts by tasks.registering(Download::class) {
 
 val verifyArtifacts by tasks.registering {
     dependsOn(downloadArtifacts)
-
-    onlyIf { needUpdate }
 
     doLast {
         val dir = downloadDir.get().asFile.toPath()
@@ -88,51 +65,44 @@ val verifyArtifacts by tasks.registering {
 }
 
 val javadocJar by tasks.registering(Jar::class) {
-    dependsOn(checkExisting)
-
-    onlyIf { needUpdate }
-
     archiveBaseName.set("HMCL")
     archiveClassifier.set("javadoc")
 
-    checkUpdate.get().doLast {
-        archiveVersion.set(hmclVersion)
-    }
+    archiveVersion.set(hmclVersion)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
-    dependsOn(checkExisting)
-
-    onlyIf { needUpdate }
-
     archiveBaseName.set("HMCL")
     archiveClassifier.set("sources")
 
-    checkUpdate.get().doLast {
-        archiveVersion.set(hmclVersion)
-    }
+    archiveVersion.set(hmclVersion)
 }
 
 tasks.withType<GenerateModuleMetadata> {
     enabled = false
 }
 
+tasks.withType<Sign> {
+    dependsOn(verifyArtifacts, javadocJar, sourcesJar)
+}
+
+tasks.withType<GenerateMavenPom> {
+    dependsOn(verifyArtifacts, javadocJar, sourcesJar)
+}
+
 val hmclPublication = publishing.publications.create<MavenPublication>("hmcl") {
     groupId = project.group.toString()
-    artifactId = channel.mavenArtifactId
+    artifactId = hmclChannel.mavenArtifactId
 
-    checkUpdate.get().doLast {
-        if (ext.has(CheckUpdate.HMCL_VERSION)) {
-            version = hmclVersion
-            artifact(downloadDir.map { "HMCL-$hmclVersion.$ext" }) {
-                this.extension = "jar"
-                this.classifier = ""
-            }
-
-            artifact(sourcesJar)
-            artifact(javadocJar)
-        }
+    version = hmclVersion
+    artifact(downloadDir.map { it.file("HMCL-$hmclVersion.jar") }) {
+        builtBy(verifyArtifacts)
+        this.extension = "jar"
+        this.classifier = ""
     }
+
+    artifact(sourcesJar)
+    artifact(javadocJar)
 
     pom {
         name.set("Hello Minecraft! Launcher ")

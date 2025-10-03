@@ -20,15 +20,11 @@ package org.glavo.hmcl.update;
 
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.ExtraPropertiesExtension;
-import org.gradle.api.provider.Property;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.TaskAction;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.URI;
@@ -39,7 +35,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /// @author Glavo
-public abstract class CheckUpdate extends DefaultTask {
+public final class CheckUpdate {
     public static final String HMCL_VERSION = "HMCL_VERSION";
     public static final String HMCL_DOWNLOAD_BASE_URI = "HMCL_DOWNLOAD_BASE_URI";
 
@@ -48,9 +44,6 @@ public abstract class CheckUpdate extends DefaultTask {
     private static final String WORKFLOW_JOB = "org.jenkinsci.plugins.workflow.job.WorkflowJob";
     private static final String WORKFLOW_MULTI_BRANCH_PROJECT = "org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject";
     private static final String FREE_STYLE_PROJECT = "hudson.model.FreeStyleProject";
-
-    @Input
-    public abstract Property<@NotNull UpdateChannel> getChannel();
 
     private static String concatUri(String base, String... others) {
         var builder = new StringBuilder(base);
@@ -63,12 +56,10 @@ public abstract class CheckUpdate extends DefaultTask {
         return builder.toString();
     }
 
-    @TaskAction
-    public void check() throws Exception {
-        UpdateChannel channel = getChannel().get();
+    public static void apply(Project project, UpdateChannel channel) throws Exception {
+        LOGGER.quiet("CHANNEL: {}", channel);
 
         URI apiUri = URI.create(concatUri(channel.getUri(), "api", "json"));
-        LOGGER.quiet("Fetching metadata from {}", apiUri);
 
         BuildMetadata buildMetadata;
 
@@ -106,8 +97,7 @@ public abstract class CheckUpdate extends DefaultTask {
 
         LOGGER.quiet("Build metadata found: {}", buildMetadata);
 
-        ExtraPropertiesExtension ext = getProject().getExtensions().getExtraProperties();
-
+        ExtraPropertiesExtension ext = project.getExtensions().getExtraProperties();
         ext.set(HMCL_VERSION, buildMetadata.version);
         ext.set(HMCL_DOWNLOAD_BASE_URI, buildMetadata.downloadBaseUri);
     }
