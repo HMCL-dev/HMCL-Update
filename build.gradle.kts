@@ -1,3 +1,8 @@
+import de.undercouch.gradle.tasks.download.Download
+import org.glavo.hmcl.update.CheckExisting
+import org.glavo.hmcl.update.CheckUpdate
+import org.glavo.hmcl.update.UpdateChannel
+import java.nio.file.Files
 import java.security.MessageDigest
 
 plugins {
@@ -9,74 +14,52 @@ plugins {
 
 group = "org.glavo.hmcl"
 
-val HMCL_VERSION_PATTERN = Regex("^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?$")
-val HMCL_BUILD_NUMBER_PATTERN = Regex("^[0-9]+$")
+val buildDir = layout.buildDirectory
+val downloadDir = buildDir.dir("downloads")
 
-val exts = listOf("exe", "jar")
+val channel = project.findProperty("hmcl.channel")?.let { name ->
+    UpdateChannel.entries.find { channel ->
+        channel.name.contentEquals(name.toString(), true)
+    } ?: throw GradleException("channel '$name' is not defined")
+} ?: throw GradleException("hmcl.channel is not defined")
 
-data class HMCLChannel(
-    val name: String,
-    val ciUrlBase: String
-) {
-    val artifactId: String = "hmcl-$name"
+val checkUpdate by tasks.registering(CheckUpdate::class) {
+    channel.set(channel)
+
 }
 
-val channels: List<HMCLChannel> = run {
-    val p = java.util.Properties()
-    rootProject.file("channels.properties").bufferedReader().use { p.load(it) }
-
-    p.getProperty("names")!!.split(',').map { name ->
-        val urlBase = p.getProperty("$name.ci.url") ?: "https://ci.huangyuhui.net/job/HMCL-$name"
-
-        HMCLChannel(name, urlBase)
-    }
+val hmclVersion by lazy {
+    project.ext[CheckUpdate.HMCL_VERSION]?.toString()
+        ?: throw GradleException("${CheckUpdate.HMCL_VERSION} is not defined")
 }
 
-logger.quiet(channels.toString())
+val checkExisting by tasks.registering(CheckExisting::class) {
+    dependsOn(checkUpdate)
 
-val hmclVersion =
-    findProperty("hmcl.version")?.toString()
-        ?: System.getenv("HMCL_VERSION") ?: throw GradleException("HMCL version not specified")
-
-val ciBuildNumber =
-    findProperty("hmcl.ci.buildNumber")?.toString()
-        ?: System.getenv("HMCL_CI_BUILD_NUMBER") ?: throw GradleException("HMCL CI build number not specified")
-
-val hmclChannel =
-    (findProperty("hmcl.channel")?.toString()
-        ?: System.getenv("HMCL_UPDATE_CHANNEL") ?: throw GradleException("HMCL channel not specified"))
-        .let {
-            for (value in channels) {
-                if (value.name == it) {
-                    return@let value
-                }
-            }
-
-            throw GradleException("Unknown channel name: $it")
-        }
-
-
-if (!HMCL_VERSION_PATTERN.matches(hmclVersion)) {
-    throw GradleException("Bad HMCL version: $hmclVersion")
-}
-
-if (!HMCL_BUILD_NUMBER_PATTERN.matches(ciBuildNumber)) {
-    throw GradleException("Bad HMCL CI build number: $ciBuildNumber")
-}
-
-val buildDir = layout.buildDirectory.get().asFile
-val downloadDir = buildDir.resolve("downloads")
-val downloadVerifyDir = downloadDir.resolve("sha1")
-
-val downloadArtifacts by tasks.registering(de.undercouch.gradle.tasks.download.Download::class) {
-    doFirst {
-        if (!downloadDir.exists()) {
-            downloadDir.mkdirs()
-        }
+    onlyIf {
+        ext.has(CheckUpdate.HMCL_VERSION) && ext.has(CheckUpdate.HMCL_DOWNLOAD_BASE_URI)
     }
 
-    for (ext in exts) {
-        src("${hmclChannel.ciUrlBase}/$ciBuildNumber/artifact/HMCL/build/libs/HMCL-$hmclVersion.$ext")
+    checkUpdate.get().doLast {
+        hmclVersion.set(hmclVersion)
+    }
+
+    channel.set(channel)
+}
+
+val needUpdate by lazy { ext.has(CheckExisting.NEED_UPDATE) }
+
+val downloadArtifacts by tasks.registering(Download::class) {
+    dependsOn(checkExisting)
+
+    onlyIf { needUpdate }
+
+    checkUpdate.get().doLast {
+        val hmclDownloadUrlBase = project.ext[CheckUpdate.HMCL_DOWNLOAD_BASE_URI]?.toString()
+            ?: throw GradleException("${CheckUpdate.HMCL_DOWNLOAD_BASE_URI} is not defined")
+
+        src("$hmclDownloadUrlBase/HMCL-$hmclVersion.jar")
+        src("$hmclDownloadUrlBase/HMCL-$hmclVersion.jar.sha256")
     }
 
     overwrite(false)
@@ -85,144 +68,97 @@ val downloadArtifacts by tasks.registering(de.undercouch.gradle.tasks.download.D
     retries(5)
 }
 
-val downloadVerifyFiles by tasks.registering(de.undercouch.gradle.tasks.download.Download::class) {
-    doFirst {
-        if (!downloadVerifyDir.exists()) {
-            downloadVerifyDir.mkdirs()
-        }
-    }
+val verifyArtifacts by tasks.registering {
+    dependsOn(downloadArtifacts)
 
-    for (ext in exts) {
-        src("${hmclChannel.ciUrlBase}/$ciBuildNumber/artifact/HMCL/build/libs/HMCL-$hmclVersion.$ext.sha1")
-    }
-
-    overwrite(false)
-    quiet(false)
-    dest(downloadVerifyDir)
-    retries(5)
-}
-
-val verifyDownload by tasks.registering {
-    dependsOn(downloadArtifacts, downloadVerifyFiles)
+    onlyIf { needUpdate }
 
     doLast {
-        var failed = false
-        val md = MessageDigest.getInstance("SHA-1")
+        val dir = downloadDir.get().asFile.toPath()
+        val expected = Files.readString(dir.resolve("HMCL-$hmclVersion.jar.sha256")).trim()
 
-        for (ext in exts) {
-            val file = downloadDir.resolve("HMCL-$hmclVersion.$ext")
-            val hashFile = downloadVerifyDir.resolve("HMCL-$hmclVersion.$ext.sha1")
+        val digest = MessageDigest.getInstance("SHA-256")
+        digest.update(Files.readAllBytes(dir.resolve("HMCL-$hmclVersion.jar")))
 
-            if (!file.exists()) {
-                logger.log(LogLevel.ERROR, "$file does not exist")
-                failed = true
-                continue
-            }
-            if (!hashFile.exists()) {
-                logger.log(LogLevel.ERROR, "$hashFile does not exist")
-                failed = true
-                continue
-            }
-
-            md.reset()
-            md.update(file.readBytes())
-
-            val hash = md.digest().joinToString(separator = "") { "%02x".format(it) }
-            val recordedHash = hashFile.readText().trim()
-
-            if (hash == recordedHash) {
-                logger.quiet("$file passed validation")
-            } else {
-                logger.log(LogLevel.ERROR, "SHA-1 of file $file ($hash) does not match $recordedHash")
-                file.delete()
-                hashFile.delete()
-                failed = true
-            }
-        }
-
-        if (failed) {
-            throw GradleException("Verification failed")
+        val actual = digest.digest().toHexString()
+        if (!expected.contentEquals(actual, true)) {
+            throw GradleException("Checksum not matching: expected $expected, actual $actual")
         }
     }
 }
 
-val updateJsonFile = downloadDir.resolve("HMCL-$hmclVersion.json")
-val generateUpdateJson by tasks.registering {
-    dependsOn(verifyDownload)
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(checkExisting)
 
-    doLast {
-        if (!downloadDir.exists()) {
-            downloadDir.mkdirs()
-        }
+    onlyIf { needUpdate }
 
-        fun downloadLink(ext: String) =
-            "https://maven.aliyun.com/repository/central/org/glavo/hmcl/${hmclChannel.artifactId}/$hmclVersion/${hmclChannel.artifactId}-$hmclVersion.$ext"
+    archiveBaseName.set("HMCL")
+    archiveClassifier.set("javadoc")
 
-        fun sha1(ext: String) =
-            downloadVerifyDir.resolve("HMCL-$hmclVersion.$ext.sha1").readText().trim()
-
-        val data = mapOf(
-            "jar" to downloadLink("jar"),
-            "jarsha1" to sha1("jar"),
-            "version" to hmclVersion,
-            "universal" to "https://www.mcbbs.net/forum.php?mod=viewthread&tid=142335"
-        )
-
-        downloadDir.resolve("HMCL-$hmclVersion.json").writeText(
-            data.map { (key, value) -> """"$key":"$value"""" }.joinToString(",", "{", "}")
-        )
+    checkUpdate.get().doLast {
+        archiveVersion.set(hmclVersion)
     }
 }
 
-tasks.withType<GenerateModuleMetadata>().configureEach {
+val sourcesJar by tasks.registering(Jar::class) {
+    dependsOn(checkExisting)
+
+    onlyIf { needUpdate }
+
+    archiveBaseName.set("HMCL")
+    archiveClassifier.set("sources")
+
+    checkUpdate.get().doLast {
+        archiveVersion.set(hmclVersion)
+    }
+}
+
+tasks.withType<GenerateModuleMetadata> {
     enabled = false
 }
 
-tasks.withType<GenerateMavenPom>().configureEach {
-    dependsOn(verifyDownload, generateUpdateJson)
-}
+val hmclPublication = publishing.publications.create<MavenPublication>("hmcl") {
+    groupId = project.group.toString()
+    artifactId = channel.mavenArtifactId
 
-configure<PublishingExtension> {
-    publications {
-        create<MavenPublication>("hmcl") {
-            groupId = "org.glavo.hmcl"
-            artifactId = hmclChannel.artifactId
+    checkUpdate.get().doLast {
+        if (ext.has(CheckUpdate.HMCL_VERSION)) {
             version = hmclVersion
-
-            for (ext in exts.plus("json")) {
-                artifact(downloadDir.resolve("HMCL-$hmclVersion.$ext")) {
-                    extension = ext
-                    classifier = ""
-                }
+            artifact(downloadDir.map { "HMCL-$hmclVersion.$ext" }) {
+                this.extension = "jar"
+                this.classifier = ""
             }
 
-            pom {
-                name.set("Hello Minecraft! Launcher ")
-                description.set("A Minecraft Launcher which is multi-functional, cross-platform and popular")
-                url.set("https://github.com/HMCL-dev/HMCL")
-                licenses {
-                    license {
-                        name.set("GPL 3.0")
-                        url.set("https://www.gnu.org/licenses/gpl-3.0.html")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("huanghongxun")
-                        name.set("Yuhui Huang")
-                        email.set("jackhuang1998@gmail.com")
-                    }
+            artifact(sourcesJar)
+            artifact(javadocJar)
+        }
+    }
 
-                    developer {
-                        id.set("Glavo")
-                        name.set("Glavo")
-                        email.set("zjx001202@gmail.com")
-                    }
-                }
-                scm {
-                    url.set("https://github.com/HMCL-dev/HMCL")
-                }
+    pom {
+        name.set("Hello Minecraft! Launcher ")
+        description.set("A Minecraft Launcher which is multi-functional, cross-platform and popular")
+        url.set("https://github.com/HMCL-dev/HMCL")
+        licenses {
+            license {
+                name.set("GPL 3.0")
+                url.set("https://www.gnu.org/licenses/gpl-3.0.html")
             }
+        }
+        developers {
+            developer {
+                id.set("huanghongxun")
+                name.set("Yuhui Huang")
+                email.set("jackhuang1998@gmail.com")
+            }
+
+            developer {
+                id.set("Glavo")
+                name.set("Glavo")
+                email.set("zjx001202@gmail.com")
+            }
+        }
+        scm {
+            url.set("https://github.com/HMCL-dev/HMCL")
         }
     }
 }
